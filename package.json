@@ -1,0 +1,62 @@
+{
+  "name": "turing-ecommerce",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "@material-ui/core": "^3.9.3",
+    "@material-ui/icons": "^3.0.2",
+    "@material-ui/styles": "^3.0.0-alpha.10",
+    "axios": "^0.18.0",
+    "classnames": "^2.2.6",
+    "express-favicon": "^2.0.1",
+    "flag-icon-css": "^3.3.0",
+    "formsy-react": "^1.1.5",
+    "history": "^4.9.0",
+    "jss": "^9.8.7",
+    "jss-extend": "^6.2.0",
+    "jwt-decode": "^2.2.0",
+    "lodash": "^4.17.11",
+    "material-ui-slider": "^3.0.0",
+    "prop-types": "^15.7.2",
+    "react": "^16.8.6",
+    "react-credit-card-input": "^1.1.5",
+    "react-dom": "^16.8.6",
+    "react-draggable": "^3.3.0",
+    "react-jss": "^8.6.1",
+    "react-redux": "^7.0.3",
+    "react-responsive-carousel": "^3.1.49",
+    "react-router-config": "^5.0.0",
+    "react-router-dom": "^5.0.0",
+    "react-scripts": "3.0.1",
+    "react-star-ratings": "^2.3.0",
+    "react-stripe-elements": "^3.0.0",
+    "redux": "^4.0.1",
+    "redux-saga": "^1.0.2",
+    "styled-components": "^4.2.0"
+  },
+  "scripts": {
+    "start": "npm run tailwind && react-scripts start",
+    "build": "npm run tailwind && react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject",
+    "tailwind": "./node_modules/.bin/tailwind build ./src/styles/tailwind/tailwind.css -c ./tailwind.js -o ./src/styles/tailwind.css"
+  },
+  "eslintConfig": {
+    "extends": "react-app"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "devDependencies": {
+    "tailwindcss": "^1.0.1"
+  }
+}

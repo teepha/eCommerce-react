@@ -1,0 +1,17 @@
+.carousel .slide {
+
+    background-color: rgba(0, 0, 0, 0);
+}
+.carousel .thumb {
+    transition: border .15s ease-in;
+    display: inline-block;
+    width: 80px;
+    margin-right: 6px;
+    white-space: nowrap;
+    overflow: hidden;
+    border: 1px solid #fff;
+}
+
+.carousel .thumb.selected, .carousel .thumb:hover {
+    border: 1px solid #f62f5e;
+}

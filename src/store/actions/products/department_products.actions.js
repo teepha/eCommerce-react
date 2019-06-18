@@ -1,0 +1,9 @@
+export const GET_DEPARTMENT_PRODUCTS = 'GET_DEPARTMENT_PRODUCTS';
+export const GET_DEPARTMENT_PRODUCTS_ERROR = 'GET_DEPARTMENT_PRODUCTS_ERROR';
+export const GET_DEPARTMENT_PRODUCTS_SUCCESS = 'GET_DEPARTMENT_PRODUCTS_SUCCESS';
+
+
+export const getDepartmentProducts = (data) => ({
+    type: GET_DEPARTMENT_PRODUCTS,
+    payload: data
+});
