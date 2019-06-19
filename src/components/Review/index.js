@@ -10,7 +10,7 @@ class Banner extends Component {
         return (
             <div className={`w-full flex flex-wrap h-32 pt-6 ${classes.borderBottom}`}>
                 <div className="w-1/4">
-                    <div className="w-full">
+                    <div className="w-full review-star">
                         <StarRatings
                             rating={rating}
                             starRatedColor="#ffc94f"
@@ -22,7 +22,7 @@ class Banner extends Component {
                         />
                     </div>
                     <div className="w-full pt-4">
-                        <div className={classes.reviewNameText}>
+                        <div className={`review-text ${classes.reviewNameText}`}>
                             {name}
                         </div>
                     </div>
