@@ -1,3 +1,21 @@
+/**
+  This component display single product using the product ID
+  To complete this component, you need to implement the following:
+  - Dynamically render product attributes, size and color
+  - Show all reviews on the product
+  - Hide review submission form if user is not logged in
+  - Hide review submission form if a user is logged in but haven't previously ordered for the product
+  - Review submission form should be visible if a logged in user has once ordered for the item
+  - Hide login message if user is logged in
+  - If a user click the `Add to Cart` button, the user should see an animation of how the product fly into the
+    cart bag with an auto close success message, and the quantity of the item in the cart bag in the NavBar should increase
+  - Dynamically render product reviews from the backend
+  - Add functionality to post review
+  - Add functionality to select product size, color and item quantity
+  - Take initiatives to customize this component and add live to the page
+
+  NB: YOU CAN STYLE AND CUSTOMISE THIS PAGE, BUT YOU HAVE TO USE OUR DEFAULT CLASSNAME, IDS AND HTML INPUT NAMES
+*/
 import React, {Component} from 'react'
 import {
     withStyles,
@@ -18,51 +36,14 @@ import classNames from "classnames";
 import {Carousel} from 'react-responsive-carousel';
 import systemConfig from '../../config/system';
 import * as productActions from '../../store/actions/product';
-import * as cartActions from '../../store/actions/cart';
 import * as alertActions from '../../store/actions/alerts';
 import styles from './styles';
 import {Container, Section} from '../../components/Layout';
 import Review from '../../components/Review';
 import ReviewForm from './ReviewForm';
 
-const initialState = {
-    color: 'blue',
-    XS: false,
-    S: false,
-    M: true,
-    L: false,
-    XL: false,
-    min: 100,
-    max: 375,
-    amount: 1,
-    rating: 0
-};
 
 class Product extends Component {
-
-    state = initialState;
-
-    handleRadioChange(event) {
-        this.setState({
-            color: event.target.value
-        });
-    }
-
-    addSubtractAmount(action) {
-        if (action === 'add') {
-            this.setState({
-                amount: this.state.amount + 1
-            })
-        } else if (this.state.amount > 1) {
-            this.setState({
-                amount: this.state.amount - 1
-            })
-        }
-    }
-
-    handleSizeChange = name => event => {
-        this.setState({...this.state, [name]: event.target.checked});
-    };
 
     componentWillMount() {
         const {match: {params}} = this.props;
@@ -75,41 +56,18 @@ class Product extends Component {
         this.props.getProductLocations({
             product_id: params.id
         });
-        this.props.getProductReviews({
-            product_id: params.id
-        });
     }
 
-    onRatingChange(rating) {
-        this.setState({
-            rating
-        });
-    }
-
-    handleAddToCart () {
-        const {match: {params}} = this.props;
-        const { color, XS, S, M, L, XL, amount } = this.state;
-        const attributes = {
-            color: color,
-            sizes: { XS, S, M, L, XL }
-        };
-
-        this.props.addToCart({
-            product_id: params.id,
-            attributes: JSON.stringify(attributes),
-            amount
-        });
-    }
 
     render() {
-        const {classes, product, loading, locations, locationsLoading, reviewsLoading, reviews, addToCartLoading, match: {params}} = this.props;
+        const {classes, product, loading, locations, locationsLoading, match: {params}} = this.props;
 
-        const isLoading = loading || !product.image || locationsLoading || reviewsLoading;
+        const isLoading = loading || !product.image || locationsLoading
         const isDiscounted = parseFloat(product.discounted_price) > 0;
 
         return (
             <div className={classes.root}>
-                <Container>
+                <Container className="product-details">
                     {isLoading ? <Section>
                             <div className="flex flex-wrap shadow flex justify-center py-24 bg-white">
                                 <CircularProgress size={40} color="primary"/>
@@ -137,7 +95,7 @@ class Product extends Component {
                                         </div>
                                         <div className="w-full h-8 mt-2">
                                             <StarRatings
-                                                rating={_.meanBy(reviews, (p) => p.rating)}
+                                                rating={3}
                                                 starRatedColor="#ffc94f"
                                                 starEmptyColor="#eeeeee"
                                                 starHoverColor="#ffc94f"
@@ -148,7 +106,7 @@ class Product extends Component {
                                             />
                                         </div>
                                         <div className="w-full h-8">
-                                    <span className={classes.productTitleText}>
+                                    <span className={`product-details-title ${classes.productTitleText}`}>
                                         {product.name}
                                     </span>
                                         </div>
@@ -167,73 +125,66 @@ class Product extends Component {
                                             <div>
                                                 <Radio
                                                     style={{padding: 2, color: '#6eb2fb'}}
-                                                    checked={this.state.color === 'blue'}
                                                     size="small"
                                                     icon={<FiberManualRecord/>}
-                                                    onChange={this.handleRadioChange.bind(this)}
                                                     value="blue"
                                                     name="radio-button-demo"
                                                     aria-label="blue"
+                                                    className="product-details-color"
                                                 />
                                                 <Radio
                                                     style={{padding: 2, color: '#00d3ca'}}
-                                                    checked={this.state.color === 'cyan'}
                                                     size="small"
                                                     icon={<FiberManualRecord/>}
-                                                    onChange={this.handleRadioChange.bind(this)}
                                                     value="cyan"
                                                     name="radio-button-demo"
                                                     aria-label="cyan"
+                                                    className="product-details-color"
                                                 />
                                                 <Radio
                                                     style={{padding: 2, color: '#f62f5e'}}
-                                                    checked={this.state.color === 'red'}
                                                     size="small"
                                                     icon={<FiberManualRecord/>}
-                                                    onChange={this.handleRadioChange.bind(this)}
                                                     value="red"
                                                     name="radio-button-demo"
                                                     aria-label="red"
+                                                    className="product-details-color"
                                                 />
                                                 <Radio
                                                     style={{padding: 2, color: '#fe5c07'}}
-                                                    checked={this.state.color === 'orange'}
                                                     size="small"
                                                     icon={<FiberManualRecord/>}
-                                                    onChange={this.handleRadioChange.bind(this)}
                                                     value="orange"
                                                     name="radio-button-demo"
                                                     aria-label="orange"
+                                                    className="product-details-color"
                                                 />
                                                 <Radio
                                                     style={{padding: 2, color: '#f8e71c'}}
-                                                    checked={this.state.color === 'yellow'}
                                                     size="small"
                                                     icon={<FiberManualRecord/>}
-                                                    onChange={this.handleRadioChange.bind(this)}
                                                     value="yellow"
                                                     name="radio-button-demo"
                                                     aria-label="yellow"
+                                                    className="product-details-color"
                                                 />
                                                 <Radio
                                                     style={{padding: 2, color: '#7ed321'}}
-                                                    checked={this.state.color === 'green'}
                                                     size="small"
                                                     icon={<FiberManualRecord/>}
-                                                    onChange={this.handleRadioChange.bind(this)}
                                                     value="green"
                                                     name="radio-button-demo"
                                                     aria-label="green"
+                                                    className="product-details-color"
                                                 />
                                                 <Radio
                                                     style={{padding: 2, color: '#9013fe'}}
-                                                    checked={this.state.color === 'purple'}
                                                     size="small"
                                                     icon={<FiberManualRecord/>}
-                                                    onChange={this.handleRadioChange.bind(this)}
                                                     value="purple"
                                                     name="radio-button-demo"
                                                     aria-label="purple"
+                                                    className="product-details-color"
                                                 />
                                             </div>
                                         </div>
@@ -246,88 +197,79 @@ class Product extends Component {
                                                     style={{padding: 0}}
                                                     checkedIcon={<div className={classes.sizeCheckboxChecked}>XS</div>}
                                                     icon={<div className={classes.sizeCheckboxUnchecked}>XS</div>}
-                                                    checked={this.state.XS}
-                                                    onChange={this.handleSizeChange('XS')}
+                                                    className="product-details-size"
                                                     value="XS"/>
                                                 <Checkbox
                                                     style={{padding: 0}}
                                                     checkedIcon={<div className={classes.sizeCheckboxChecked}>S</div>}
                                                     icon={<div className={classes.sizeCheckboxUnchecked}>S</div>}
-                                                    checked={this.state.S}
-                                                    onChange={this.handleSizeChange('S')}
+                                                    className="product-details-size"
                                                     value="checkedA"/>
                                                 <Checkbox
                                                     style={{padding: 0}}
                                                     checkedIcon={<div className={classes.sizeCheckboxChecked}>M</div>}
                                                     icon={<div className={classes.sizeCheckboxUnchecked}>M</div>}
-                                                    checked={this.state.M}
-                                                    onChange={this.handleSizeChange('M')}
+                                                    className="product-details-size"
                                                     value="M"/>
                                                 <Checkbox
                                                     style={{padding: 0}}
                                                     checkedIcon={<div className={classes.sizeCheckboxChecked}>L</div>}
                                                     icon={<div className={classes.sizeCheckboxUnchecked}>L</div>}
-                                                    checked={this.state.L}
-                                                    onChange={this.handleSizeChange('L')}
+                                                    className="product-details-size"
                                                     value="L"/>
                                                 <Checkbox
                                                     style={{padding: 0}}
                                                     checkedIcon={<div className={classes.sizeCheckboxChecked}>XL</div>}
                                                     icon={<div className={classes.sizeCheckboxUnchecked}>XL</div>}
-                                                    checked={this.state.XL}
-                                                    onChange={this.handleSizeChange('XL')}
+                                                    className="product-details-size"
                                                     value="XL"/>
                                             </div>
                                         </div>
                                         <div className="w-full my-8 flex flex-row">
                                             <Fab size="small" aria-label="Subtract" className={classes.addRemoveIcon}
-                                                 onClick={this.addSubtractAmount.bind(this, 'subtract')}>
+                                                 >
                                                 <SubtractIcon/>
                                             </Fab>
 
                                             <div
                                                 className="shadow appearance-none border rounded w-16 text-gray-700 rounded-full text-center mx-2">
-                                                <span className={classes.addRemoveText}>{this.state.amount}</span>
+                                                <span className={`product-details-quantity ${classes.addRemoveText}`}>1</span>
                                             </div>
 
                                             <Fab size="small" aria-label="Add" className={classes.addRemoveIcon}
-                                                 onClick={this.addSubtractAmount.bind(this, 'add')}>
+                                            >
                                                 <AddIcon/>
                                             </Fab>
                                         </div>
                                         <div className="w-full my-8 flex flex-row">
                                             <div className="relative">
                                             <Fab color="primary" size="large"
-                                                 disabled={addToCartLoading}
-                                                 onClick={this.handleAddToCart.bind(this)}
                                                  style={{borderRadius: 60, height: 60, width: 220}}>
-                                                <span className={classes.submitButtonText}>Add to Cart</span></Fab>
-                                            { addToCartLoading && <CircularProgress color="primary" className={classes.buttonProgress} size={24} />}
+                                                <span className={classes.submitButtonText} id="btnCart">Add to Cart</span></Fab>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </Section>
-                            <Hidden mdDown>
-                                <Section>
-                                    <div className="flex flex-wrap px-32">
-                                        <div className="w-full flex">
-                                         <span className={classes.reviewTitleText}>
-                                            Product Reviews
-                                        </span>
+                            <div id="review">
+                                <Hidden mdDown>
+                                    <Section>
+                                        <div className="flex flex-wrap px-32">
+                                            <div className="w-full flex">
+                                            <span className={classes.reviewTitleText}>
+                                                Product Reviews
+                                            </span>
+                                            </div>
+                                                <Review rating={5} name="Peter Test" review="Test Review 1" />
+                                                <Review rating={3} name="Celestine Test" review="Test Review 2" />
                                         </div>
-                                        {
-                                            reviews.map((item, index) => {
-                                                return <Review key={index} rating={item.rating} name={item.name} review={item.review} />
-                                            })
-                                        }
-                                    </div>
-                                </Section>
-                            </Hidden>
-                            { this.props.user.customer ? <ReviewForm productId={params.id} /> :
+                                    </Section>
+                                </Hidden>
+                                <ReviewForm productId={params.id} />
+                            </div>
                                 <div className="w-full flex justify-center align-middle py-8" >
-                                    <Link onClick={() => {this.props.showAuth(false)}} color={'primary'} style={{cursor: "pointer"}}>Log In</Link> <span className="ml-2">to Add a Review.</span>
-                                </div>}
+                                    <Link onClick={() => {this.props.showAuth(false)}} color={'primary'} style={{cursor: "pointer", color: 'red'}}>Log In</Link> <span className="ml-2">to Add a Review.</span>
+                                </div>
                         </div>}
                 </Container>
             </div>
@@ -340,24 +282,16 @@ function mapDispatchToProps(dispatch) {
         getSingleProduct: productActions.getSingleProduct,
         getProductDetails: productActions.getProductDetails,
         getProductLocations: productActions.getProductLocations,
-        getProductReviews: productActions.getProductReviews,
-        addToCart: cartActions.addToCart,
-        updateCartItem: cartActions.updateCartItem,
         showAuth: alertActions.showAuth
     }, dispatch);
 }
 
 function mapStateToProps({product, cart, auth}) {
     return {
-        user: auth.user,
         product: product.item.data,
         locations: product.locations.data,
         locationsLoading: product.locations.isLoading,
         loading: product.item.isLoading,
-        reviews: product.reviews.data,
-        reviewsLoading: product.reviews.isLoading,
-        addToCartLoading: cart.add.isLoading,
-        cartItems: cart.items.isLoading
     }
 }
 

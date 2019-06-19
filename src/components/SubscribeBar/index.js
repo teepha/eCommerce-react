@@ -45,10 +45,5 @@ function mapDispatchToProps(dispatch) {
     }, dispatch);
 }
 
-function mapStateToProps({categories}) {
-    return {
-        categories: categories.all.data
-    }
-}
 
-export default withStyles(styles, {withTheme: true})(connect(mapStateToProps, mapDispatchToProps)(SubscribeBar));
+export default withStyles(styles, {withTheme: true})(connect(null, mapDispatchToProps)(SubscribeBar));

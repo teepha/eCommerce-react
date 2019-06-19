@@ -69,6 +69,7 @@ class AuthDialog extends Component {
                                 {register && <Link color="primary"
                                                    className={classes.submitButtonText}
                                                    onClick={this.handleLoginNav.bind(this)}
+                                                   style={{color: 'red'}}
                                 >
                                     Go to Login</Link>}
                             </div>
@@ -76,6 +77,7 @@ class AuthDialog extends Component {
                                 {!register && <Link color="primary"
                                                     className={classes.submitButtonText}
                                                     onClick={this.handleRegisterNav.bind(this)}
+                                                    style={{color: 'red'}}
                                 >
                                     Register</Link>}
                             </div>

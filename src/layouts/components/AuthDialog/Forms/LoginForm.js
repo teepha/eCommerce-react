@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Button, InputAdornment, CircularProgress, withStyles} from '@material-ui/core';
+import {Button, InputAdornment, withStyles} from '@material-ui/core';
 import EmailIcon from '@material-ui/icons/Email';
 import PasswordIcon from '@material-ui/icons/VpnKey';
 import {bindActionCreators} from 'redux';
@@ -11,67 +11,27 @@ import styles from './styles';
 
 class LoginForm extends Component {
 
-    state = {
-        canSubmit: false
-    };
-
     form = React.createRef();
 
-    disableButton = () => {
-        this.setState({canSubmit: false});
-    };
-
-    enableButton = () => {
-        this.setState({canSubmit: true});
-    };
-
-    onSubmit = (model) => {
-        this.props.submitLogin(model);
-    };
-
-    componentDidUpdate(prevProps, prevState, snapshot) {
-
-        if (this.props.login.error && (this.props.login.error.email || this.props.login.error.password)) {
-            this.form.updateInputsWithError({
-                ...this.props.login.error
-            });
-
-            this.props.login.error = null;
-            this.disableButton();
-        }
-
-        return null;
-    }
-
     render() {
-        const {loginLoading} = this.props;
-        const {canSubmit} = this.state;
 
         return (
             <div className="w-full flex flex-row justify-center">
                 <Formsy
-                    onValidSubmit={this.onSubmit}
-                    onValid={this.enableButton}
-                    onInvalid={this.disableButton}
                     ref={(form) => this.form = form}
                     className="bg-white shadow-md rounded px-8 pt-6 mt-6 pb-8 mb-4"
+                    id="signInForm"
                 >
                     <TextFieldFormsy
                         className="w-full mb-4"
                         type="text"
                         name="email"
-                        label="Username/Email"
-                        validations={{
-                            minLength: 4
-                        }}
-                        validationErrors={{
-                            minLength: 'Min character length is 4'
-                        }}
+                        label="Email"
                         InputProps={{
                             endAdornment: <InputAdornment position="end"><EmailIcon className="text-20" color="action"/></InputAdornment>
                         }}
                         variant="outlined"
-                        helperText={this.props.login.error && this.props.login.error.email ? this.props.login.error.email : ''}
+                        helperText=''
                         required
                     />
 
@@ -80,18 +40,12 @@ class LoginForm extends Component {
                         type="password"
                         name="password"
                         label="Password"
-                        validations={{
-                            minLength: 4
-                        }}
-                        validationErrors={{
-                            minLength: 'Min character length is 4'
-                        }}
                         InputProps={{
                             endAdornment: <InputAdornment position="end"><PasswordIcon className="text-20"
                                                                                        color="action"/></InputAdornment>
                         }}
                         variant="outlined"
-                        helperText={this.props.login.error && this.props.login.error.password ? this.props.login.error.password : ''}
+                        helperText=''
                         required
                     />
 
@@ -101,11 +55,34 @@ class LoginForm extends Component {
                         color="primary"
                         className="w-full mx-auto mt-16 normal-case"
                         aria-label="LOG IN"
-                        disabled={!canSubmit}
                         value="legacy"
+                        id="btnFormSignIn"
                     >
-                        {loginLoading ? <CircularProgress size={20} color="secondary" style={{margin: 4}}/> : 'Login'}
+                        Login
                     </Button>
+                    <div className="flex flex-row justify-between">
+                        <Button
+                            type="submit"
+                            variant="contained"
+                            color="primary"
+                            className="w-5\12 mx-auto mt-16 normal-case btnFacebook"
+                            aria-label="LOG IN"
+                            value="legacy"
+                        >
+                            Login with Facebook
+                        </Button>
+                        <Button
+                            type="submit"
+                            variant="contained"
+                            color="primary"
+                            className="w-5\12 mx-auto mt-16 normal-case"
+                            aria-label="LOG IN"
+                            value="legacy"
+                            id="btnGoogle"
+                        >
+                            Login with Google
+                        </Button>
+                    </div>
 
                 </Formsy>
             </div>
@@ -113,17 +90,5 @@ class LoginForm extends Component {
     }
 }
 
-function mapDispatchToProps(dispatch) {
-    return bindActionCreators({
-        submitLogin: authActions.submitLogin
-    }, dispatch);
-}
 
-function mapStateToProps({auth}) {
-    return {
-        loginLoading: auth.login.isLoading,
-        login: auth.login
-    }
-}
-
-export default withStyles(styles)(connect(mapStateToProps, mapDispatchToProps)(LoginForm));
+export default withStyles(styles)(LoginForm);

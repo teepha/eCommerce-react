@@ -8,7 +8,6 @@ import {connect} from "react-redux";
 import styles from './styles';
 import Button from "@material-ui/core/Button";
 import * as alertActions from "../../../../store/actions/alerts";
-import * as authActions from "../../../../store/actions/auth";
 
 const links = [{
     title: 'Daily Deals',
@@ -27,33 +26,29 @@ class TopBar extends React.Component {
 
         const {
             classes,
-            cartItems,
-            user
         } = this.props;
 
         return (
             <AppBar className={classes.topBar}>
                 <Toolbar className={classes.toolbar}>
-                    {!this.props.user.customer ? <div className={classes.authText}>
+                    <div className={classes.authText}>
                             Hi! <Link onClick={() => {
                             this.props.showAuth(false)
-                        }} className={classes.authLink}>
+                        }} className={classes.authLink} id="btnSignIn" style={{color: 'red'}}>
                             Sign In
                         </Link> or <Link onClick={() => {
                             this.props.showAuth(true)
-                        }} className={classes.authLink}>
+                        }} className={classes.authLink} id="btnRegister" style={{color: 'red'}}>
                             Register
                         </Link>
                         </div> :
                         <div className={classes.authText}>
-                            Hi {user.customer && user.customer.name}! <Link className={classes.authLink}>
+                            Hi Charles! <Link className={classes.authLink} style={{color: 'red'}}>
                             My Profile
-                        </Link> | <Link onClick={() => {
-                            this.props.logout()
-                        }} className={classes.authLink}>
+                        </Link> | <Link className={classes.authLink} id="btnLogout" style={{color: 'red'}}>
                             Logout
                         </Link>
-                        </div>}
+                        </div>
                     <Hidden mdDown>
                         <div className={classes.linksContainer}>
                             {
@@ -75,16 +70,16 @@ class TopBar extends React.Component {
                         <div className={classes.currencyText}>GBR</div>
                     </div>
                     </Hidden>
-                    <div className={classes.iconContainer} onClick={() => {
+                    <div className={classes.iconContainer} id="menuCartLink" onClick={() => {
                         this.props.showCart()
                     }}>
-                        {cartItems.length > 0 ? <Badge classes={{
-                            badge: classes.badge
-                        }}
-                                                       badgeContent={cartItems.length}
-                                                       color="primary">
+                        <Badge 
+                            classes={{badge: classes.badge}}
+                            badgeContent={1}
+                            color="primary"
+                        >
                             <img alt="Shopping Cart Icon" src="/assets/icons/shopping-cart-black.svg"/>
-                        </Badge> : <img alt="Shopping Cart Icon" src="/assets/icons/shopping-cart-black.svg"/>}
+                        </Badge>
                     </div>
                     <div>
                         <div className={classes.yourBag}>Your Bag:</div>
@@ -102,16 +97,9 @@ TopBar.propTypes = {
 function mapDispatchToProps(dispatch) {
     return bindActionCreators({
         showCart: alertActions.showCart,
-        showAuth: alertActions.showAuth,
-        logout: authActions.logoutUser
+        showAuth: alertActions.showAuth
     }, dispatch);
 }
 
-function mapStateToProps({cart, auth}) {
-    return {
-        cartItems: cart.items.data,
-        user: auth.user
-    }
-}
 
-export default withStyles(styles, {withTheme: true})(connect(mapStateToProps, mapDispatchToProps)(TopBar));
+export default withStyles(styles, {withTheme: true})(connect(null, mapDispatchToProps)(TopBar));

@@ -39,7 +39,7 @@ const dashboardRoutes = [];
 class Layout extends React.Component {
 
     render() {
-        const {children, products, searchLoading} = this.props;
+        const {children, products } = this.props;
 
         return (<AppContext.Consumer>
             {({routes}) => (
@@ -51,7 +51,7 @@ class Layout extends React.Component {
                         fixed
                     />
                     {
-                        (products.length > 0 || searchLoading) ? <SearchDisplay products={products} loading={searchLoading} /> :renderRoutes(routes)
+                        renderRoutes(routes)
                     }
                     {children}
                     <Footer/>
@@ -67,8 +67,7 @@ class Layout extends React.Component {
 
 function mapStateToProps({products}) {
     return {
-        products: products.search.data.rows,
-        searchLoading: products.search.isLoading,
+        products: products.all.data.rows,
     }
 }
 

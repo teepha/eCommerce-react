@@ -1,8 +1,5 @@
 import React from "react";
-import {bindActionCreators} from 'redux';
-import {connect} from "react-redux";
-import * as departmentActions from "../../../store/actions/departments";
-import {CircularProgress, Hidden, withStyles} from "@material-ui/core";
+import {Hidden, withStyles} from "@material-ui/core";
 import {Link} from 'react-router-dom';
 import Button from "@material-ui/core/Button";
 import {Container} from "../../../components/Layout";
@@ -10,30 +7,36 @@ import styles from './styles';
 
 class Footer extends React.Component {
 
-    componentWillMount() {
-        this.props.getAllDepartments()
-    }
-
     render() {
 
-        const {classes, departments} = this.props;
+        const { classes } = this.props;
 
         return (
             <div className={classes.root}>
                 <Container desktopOnly={true}>
                     <Hidden smDown>
                         <div className={classes.linksContainer}>
-                            {
-                                departments.length > 0 ? departments.map((item) => {
-                                    return (<Button key={item.department_id} classes={{
+                                <Button classes={{
                                         root: classes.button
                                     }}>
-                                        <Link key={item.department_id} to={`/department/${item.department_id}`} className={classes.footerLink}>
-                                            {item.name}
+                                        <Link to={`/`} className={classes.footerLink}>
+                                            Regional
                                         </Link>
-                                    </Button>)
-                                }) : <CircularProgress size={20} color="inherit"/>
-                            }
+                                    </Button>
+                                    <Button classes={{
+                                        root: classes.button
+                                    }}>
+                                        <Link to={`/`} className={classes.footerLink}>
+                                            Nature
+                                        </Link>
+                                    </Button>
+                                    <Button classes={{
+                                        root: classes.button
+                                    }}>
+                                        <Link to={`/`} className={classes.footerLink}>
+                                            Seasonal
+                                        </Link>
+                                    </Button>
                         </div>
                     </Hidden>
                     <div className={classes.socialContainer}>
@@ -58,16 +61,5 @@ Footer.defaultProps = {
     }
 };
 
-function mapDispatchToProps(dispatch) {
-    return bindActionCreators({
-        getAllDepartments: departmentActions.getAllDepartments
-    }, dispatch);
-}
 
-function mapStateToProps({departments}) {
-    return {
-        departments: departments.all.data
-    }
-}
-
-export default withStyles(styles, {withTheme: true})(connect(mapStateToProps, mapDispatchToProps)(Footer));
+export default withStyles(styles, {withTheme: true})(Footer);

@@ -32,6 +32,7 @@
     "react-router-dom": "^5.0.0",
     "react-scripts": "3.0.1",
     "react-star-ratings": "^2.3.0",
+    "react-stripe-checkout": "^2.6.3",
     "react-stripe-elements": "^3.0.0",
     "redux": "^4.0.1",
     "redux-saga": "^1.0.2",
