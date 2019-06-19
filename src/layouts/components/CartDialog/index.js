@@ -4,7 +4,6 @@ import {
     Dialog,
     DialogContent,
     withStyles,
-    CircularProgress,
     Fab
 } from '@material-ui/core';
 import {bindActionCreators} from 'redux';
@@ -12,7 +11,6 @@ import {connect} from 'react-redux';
 import Cart from './Cart'
 import * as Actions from '../../../store/actions/alerts';
 import OrderForm from "./Forms/OrderForm";
-import * as ordersActions from '../../../store/actions/orders';
 import styles from './styles';
 
 function PaperComponent(props) {
@@ -28,10 +26,6 @@ class CartDialog extends Component {
         activeStep: 0,
         completed: false
     };
-    
-    componentDidMount() {
-        this.props.getAllShipping();
-    }
 
     handleClose = () => {
         this.props.hideCart();
@@ -39,15 +33,9 @@ class CartDialog extends Component {
 
 
     handleNext() {
-        if (this.props.user.customer) {
-            this.setState({
-                activeStep: this.state.activeStep + 1
-            })
-        } else {
-            alert('Please Sign In to complete order.');
-            this.props.showAuth(false);
-        }
-
+        this.setState({
+            activeStep: this.state.activeStep + 1
+        })
     }
 
     handlePrevious() {
@@ -59,7 +47,7 @@ class CartDialog extends Component {
     }
 
     render() {
-        const {classes } = this.props;
+        const {classes} = this.props;
         const {activeStep} = this.state;
 
 
@@ -117,15 +105,12 @@ function mapDispatchToProps(dispatch) {
     return bindActionCreators({
         hideCart: Actions.hideCart,
         showAuth: Actions.showAuth,
-        getAllShipping: ordersActions.getAllShipping
     }, dispatch);
 }
 
 function mapStateToProps({alerts, cart, auth}) {
     return {
         open: alerts.cart.open,
-        cartItems: cart.items.data,
-        user: auth.user
     }
 }
 

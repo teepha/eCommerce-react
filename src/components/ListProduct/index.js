@@ -13,7 +13,7 @@ class ListProduct extends Component {
         const isDiscounted = parseFloat(product.discounted_price) > 0;
 
         return (
-            <div className="max-w-sm overflow-hidden shadow-lg bg-white w-11/12 justify-center relative">
+            <div className="max-w-sm overflow-hidden shadow-lg bg-white w-11/12 justify-center relative product-card">
 
                 {parseFloat(product.discounted_price) > 0 &&
                 <div className={classes.wasBlockContainer}>
@@ -23,7 +23,7 @@ class ListProduct extends Component {
                 <img className="w-full" src={systemConfig.imageBaseUrl + product.thumbnail} alt="Product Image"/>
 
                 <div className="py-2 text-center">
-                   <span className={classes.productTitle}>
+                   <span className={`product-card-title ${classes.productTitle}`}>
                         {product.name}
                     </span>
                 </div>
@@ -36,7 +36,7 @@ class ListProduct extends Component {
                 </span>
                 </div>
 
-                <Link to={`/product/${product.product_id}`}>
+                <Link to={`/product/${product.product_id}`} className="product-card-link">
                     <div className={classes.addButtonContainer}>
                         <Fab color="primary" size="small" className={classes.addButton}>
                             <span className={classes.addButtonText}>View</span>

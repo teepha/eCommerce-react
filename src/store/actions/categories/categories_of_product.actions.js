@@ -1,9 +1,0 @@
-export const GET_CATEGORIES_OF_PRODUCT = 'GET_CATEGORIES_OF_PRODUCT';
-export const GET_CATEGORIES_OF_PRODUCT_ERROR = 'GET_CATEGORIES_OF_PRODUCT_ERROR';
-export const GET_CATEGORIES_OF_PRODUCT_SUCCESS = 'GET_CATEGORIES_OF_PRODUCT_SUCCESS';
-
-
-export const getCategoriesOfProduct = (data) => ({
-    type: GET_CATEGORIES_OF_PRODUCT,
-    payload: data
-});

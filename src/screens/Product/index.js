@@ -268,7 +268,7 @@ class Product extends Component {
                                 <ReviewForm productId={params.id} />
                             </div>
                                 <div className="w-full flex justify-center align-middle py-8" >
-                                    <Link onClick={() => {this.props.showAuth(false)}} color={'primary'} style={{cursor: "pointer"}}>Log In</Link> <span className="ml-2">to Add a Review.</span>
+                                    <Link onClick={() => {this.props.showAuth(false)}} color={'primary'} style={{cursor: "pointer", color: 'red'}}>Log In</Link> <span className="ml-2">to Add a Review.</span>
                                 </div>
                         </div>}
                 </Container>
@@ -288,7 +288,6 @@ function mapDispatchToProps(dispatch) {
 
 function mapStateToProps({product, cart, auth}) {
     return {
-        user: auth.user,
         product: product.item.data,
         locations: product.locations.data,
         locationsLoading: product.locations.isLoading,

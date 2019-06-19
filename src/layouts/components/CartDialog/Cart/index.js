@@ -1,3 +1,6 @@
+/**
+ * Implement functionality for Cart
+ */
 import {Fab, withStyles} from '@material-ui/core';
 import AddIcon from '@material-ui/icons/Add';
 import SubtractIcon from '@material-ui/icons/Remove';

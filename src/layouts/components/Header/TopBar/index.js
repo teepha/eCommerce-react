@@ -8,7 +8,6 @@ import {connect} from "react-redux";
 import styles from './styles';
 import Button from "@material-ui/core/Button";
 import * as alertActions from "../../../../store/actions/alerts";
-import * as authActions from "../../../../store/actions/auth";
 
 const links = [{
     title: 'Daily Deals',
@@ -35,18 +34,18 @@ class TopBar extends React.Component {
                     <div className={classes.authText}>
                             Hi! <Link onClick={() => {
                             this.props.showAuth(false)
-                        }} className={classes.authLink} id="btnSignIn">
+                        }} className={classes.authLink} id="btnSignIn" style={{color: 'red'}}>
                             Sign In
                         </Link> or <Link onClick={() => {
                             this.props.showAuth(true)
-                        }} className={classes.authLink} id="btnRegister">
+                        }} className={classes.authLink} id="btnRegister" style={{color: 'red'}}>
                             Register
                         </Link>
                         </div> :
                         <div className={classes.authText}>
-                            Hi Charles! <Link className={classes.authLink}>
+                            Hi Charles! <Link className={classes.authLink} style={{color: 'red'}}>
                             My Profile
-                        </Link> | <Link className={classes.authLink} id="btnLogout">
+                        </Link> | <Link className={classes.authLink} id="btnLogout" style={{color: 'red'}}>
                             Logout
                         </Link>
                         </div>

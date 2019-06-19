@@ -1,8 +1,12 @@
-# SHOPMATE
-### A Turing E-Commerce App
+# Turing Front-end Challenge Template
 
-Live Implementation:
-[http://shopmate-turing.herokuapp.com](http://shopmate-turing.herokuapp.com/) 
+## Important Note
+Before using this template, read the template guide [here](https://docs.google.com/document/d/1F68KceOe2lUi3KDVcBEcOxwwRsZDNLmkFFYrIAcV6BQ/edit?usp=sharing)
+
+## Introduction
+
+> **Turing Front-end App Challenge template** is an e-commerce application template built using React that enables users shop for goods in the plaform. To complete this challenge, you need to implement all the requirement in the frontend challenge doc. You can modify the design to suit your purpose, but ensure you use all our default predefined Id and classes.
+Comments are added to the top of most of the component file which serve as a guide to what is expected from the finished product.
 
 The App has been built using React.
 
@@ -17,14 +21,6 @@ The app uses and advanced redux structure. All Network calls go via redux and re
 
 The UI is based primarily on Material UI. Tailwind CSS is used for grids and responsiveness. Other thatn that, custom styling is used. The theming is quite an advanced structure in itself. The Layout and Theme is selected based on the route. This can be seen in th "layouts" directory in the "src" directory. All Icons are SVG or Font Icons so scaling should not be an issue.
 
-## Functions Completed
-
-* Auth - Login and Register
-* List Products - Based on Selection of Department and Category
-* Add to Cart
-* View Product and Ratings - Add a Rating - Displayed rating is calculated based on all ratings of the product
-* Cart calculates total. On update, the server is called and the UI is updated in real time
-* Complete payment using Stripe
 
 ## Scripts to Note
 

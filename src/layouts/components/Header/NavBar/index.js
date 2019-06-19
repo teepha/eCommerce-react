@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import {withStyles, CircularProgress, InputBase, Badge, Drawer, Hidden, IconButton, Button, Toolbar, AppBar} from '@material-ui/core';
+import {withStyles, InputBase, Badge, Drawer, Hidden, IconButton, Button, Toolbar, AppBar} from '@material-ui/core';
 import {bindActionCreators} from 'redux';
 import {connect} from "react-redux";
 import SearchIcon from '@material-ui/icons/Search';
@@ -8,13 +8,8 @@ import Menu from '@material-ui/icons/Menu';
 import {
     NavDropdown,
 } from 'react-bootstrap';
-import { LinkContainer } from 'react-router-bootstrap';
 import { Link }  from 'react-router-dom';
 import styles from './styles';
-import * as productActions from "../../../../store/actions/products";
-import * as categoryActions from "../../../../store/actions/categories";
-import * as cartActions from "../../../../store/actions/cart";
-import * as departmentsActions from "../../../../store/actions/departments";
 import * as alertActions from "../../../../store/actions/alerts";
 
 class NavBar extends React.Component {
@@ -22,21 +17,6 @@ class NavBar extends React.Component {
     state = {
         mobileOpen: false
     };
-
-    componentWillMount() {
-        this.props.getAllDepartments();
-        this.props.getCartItems();
-    }
-
-    handleSearch(event) {
-        this.props.searchProducts({
-            query_string: event.target.value,
-            all_words: 'on',
-            page: 1,
-            limit: 9,
-            description_length: 120
-        });
-    }
 
     handleDrawerToggle() {
         this.setState({ mobileOpen: !this.state.mobileOpen });
@@ -49,8 +29,6 @@ class NavBar extends React.Component {
             brand
         } = this.props;
 
-        const {departments, cartItems, categories} = this.props;
-
         const brandComponent = <Link to={'/'} style={{textDecoration: 'none'}}><Button className={classes.brand}>{brand}</Button></Link>;
 
         return (
@@ -61,33 +39,70 @@ class NavBar extends React.Component {
                             {brandComponent}
                         </div>
                         <Hidden mdDown>
-                        <div className={classes.linksContainer}>
-                            {
-                                departments.length ?
-                                departments.map(department => (
-                                    <NavDropdown
-                                        key={department.department_id}
-                                        title={department.name}
-                                        id="basic-nav-dropdown"
-                                    >
-                                        {categories.count && categories.rows.map(category => {
-                                            return category.department_id === department.department_id ? (
-                                                <LinkContainer
-                                                    key={category.category_id}
-                                                    to={`/department/${department.department_id}/category/${category.category_id}`}
-                                                >
-                                                <NavDropdown.Item
-                                                    onClick={() => {}}
-                                                >
-                                                    {category.name}
-                                                </NavDropdown.Item>
-                                                </LinkContainer>
-                                            ) : null
-                                        }
-                                        )}
-                                    </NavDropdown>
-                                )) : <CircularProgress size={20} color="inherit"/>
-                            }
+                        <div className={`departments categories ${classes.linksContainer}`}>
+                            <NavDropdown
+                                title='Regional'
+                                id="basic-nav-dropdown"
+                                className="department"
+                            >
+                                <NavDropdown.Item
+                                    onClick={() => {}}
+                                    className="category"
+                                >
+                                    French
+                                </NavDropdown.Item>
+
+                                <NavDropdown.Item
+                                    onClick={() => {}}
+                                    className="category"
+                                >
+                                    Italian
+                                </NavDropdown.Item>
+                                <NavDropdown.Item
+                                    onClick={() => {}}
+                                    className="category"
+                                >
+                                    Irish
+                                </NavDropdown.Item>
+                            </NavDropdown>
+                            <NavDropdown
+                                title='Nature'
+                                id="basic-nav-dropdown"
+                                className="department"
+                            >
+                                <NavDropdown.Item
+                                    onClick={() => {}}
+                                    className="category"
+                                >
+                                    Animal
+                                </NavDropdown.Item>
+                                <NavDropdown.Item
+                                    onClick={() => {}}
+                                >
+                                    Flower
+                                </NavDropdown.Item>
+                                    
+                            </NavDropdown>
+
+                            <NavDropdown
+                                title='Seasonal'
+                                id="basic-nav-dropdown"
+                                className="department"
+                            >
+                                <NavDropdown.Item
+                                    onClick={() => {}}
+                                    className="category"
+                                >
+                                    Christmas
+                                </NavDropdown.Item>
+                                <NavDropdown.Item
+                                    onClick={() => {}}
+                                    className="category"
+                                >
+                                    Valentine's
+                                </NavDropdown.Item>
+                                    
+                            </NavDropdown>
                         </div>
                         </Hidden>
                         <Hidden mdDown>
@@ -97,7 +112,7 @@ class NavBar extends React.Component {
                             </div>
                             <InputBase
                                 placeholder="Search…"
-                                onChange={this.handleSearch.bind(this)}
+                                name="search"
                                 classes={{
                                     root: classes.inputRoot,
                                     input: classes.inputInput,
@@ -107,13 +122,13 @@ class NavBar extends React.Component {
                         </Hidden>
                         <Hidden mdDown>
                             <div className={classes.iconContainer} onClick={() => {this.props.showCart()}}>
-                                {cartItems.length > 0 ? <Badge classes={{
+                                <Badge classes={{
                                     badge: classes.badge
                                 }}
-                                                               badgeContent={cartItems.length}
+                                                               badgeContent={1}
                                                                color="primary">
                                     <img alt="Shopping Cart Icon" src="/assets/icons/shopping-cart-white.svg"/>
-                                </Badge>: <img alt="Shopping Cart Icon" src="/assets/icons/shopping-cart-white.svg"/>}
+                                </Badge>
                             </div>
                         </Hidden>
                         <Hidden mdUp>
@@ -134,17 +149,13 @@ class NavBar extends React.Component {
                             open={this.state.mobileOpen}
                             onClose={this.handleDrawerToggle.bind(this)}
                         >
-                            {
-                                departments.length > 0 ? departments.map((item) => {
-                                    return (<Button key={item.department_id} classes={{
-                                        root: classes.button
-                                    }}>
-                                        <Link key={item.category_id} to={`/department/${item.department_id}`} className={classes.navDrawerLink} >
-                                            {item.name}
-                                        </Link>
-                                    </Button>)
-                                }) : <CircularProgress size={20} color="inherit"/>
-                            }
+                        <Button classes={{
+                                    root: classes.button
+                                }}>
+                                    <Link to={`/department/1`} className={classes.navDrawerLink} >
+                                        Regional
+                                    </Link>
+                                </Button>
                         </Drawer>
                     </Hidden>
                 </AppBar>
@@ -173,20 +184,8 @@ NavBar.propTypes = {
 
 function mapDispatchToProps(dispatch) {
     return bindActionCreators({
-        getAllCategories: categoryActions.getAllCategories,
-        getAllDepartments: departmentsActions.getAllDepartments,
-        searchProducts: productActions.searchProducts,
-        getCartItems: cartActions.getCartItems,
         showCart: alertActions.showCart
     }, dispatch);
 }
 
-function mapStateToProps({categories, cart, departments}) {
-    return {
-        departments: departments.all.data,
-        categories: categories.all.data,
-        cartItems: cart.items.data
-    }
-}
-
-export default withStyles(styles, {withTheme: true})(connect(mapStateToProps, mapDispatchToProps)(NavBar));
+export default withStyles(styles, {withTheme: true})(connect(null, mapDispatchToProps)(NavBar));
