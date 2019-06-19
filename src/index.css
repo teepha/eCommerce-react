@@ -11,3 +11,20 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
 }
+
+.dropdown-toggle.nav-link {
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.dropdown-toggle.nav-link:hover {
+  color: rgb(255, 255, 255);
+}
+
+.dropdown-item.active, .dropdown-item:active{
+  background: rgb(246, 47, 94);
+}
+
+.dropdown-item:hover {
+  color: white;
+  background: rgb(255, 92, 130);
+}

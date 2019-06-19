@@ -116,6 +116,13 @@ class Home extends Component {
 
     }
 
+    componentDidUpdate(prevProps, prevState) {
+        // reload when url changes to fetch correct products
+        if(prevProps.location.pathname !== this.props.location.pathname) {
+            window.location.reload();
+        }
+    }
+
 
     render() {
         const {classes, products, departmentProducts, categoryProducts, match: {params}, departments, categories, allCategories} = this.props;
