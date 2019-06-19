@@ -57,7 +57,7 @@ const styles = theme => ({
     },
     controlsTitle: {
         fontWeight: "700",
-        fontFamily: 'Lucida Grande',
+        fontFamily: 'Montserrat',
         fontSize: "16px",
         color: theme.palette.medium
     },
@@ -116,7 +116,7 @@ const styles = theme => ({
         width: "100%"
     },
     sizeCheckboxUnchecked: {
-        width: "55px",
+        width: "70px",
         height: "24px",
         lineHeight: "24px",
         margin: "2px",
@@ -126,7 +126,7 @@ const styles = theme => ({
         fontWeight: 700
     },
     sizeCheckboxChecked: {
-        width: "55px",
+        width: "70px",
         height: "24px",
         lineHeight: "24px",
         margin: "2px",
@@ -137,15 +137,22 @@ const styles = theme => ({
         fontWeight: 700
     },
     sizeCheckboxes: {
-        paddingTop: "15px"
+        paddingTop: "15px",
+        paddingBottom: "15px",
     },
     colorRadiosContainer: {
         height: "50px",
         display: 'flex',
         flexDirection: 'row',
-        justifyContent: 'space-between'
+        justifyContent: 'center'
     },
     sliderContainer: {
+        height: "40px",
+        display: 'flex',
+        flexDirection: 'row',
+        justifyContent: 'space-between'
+    },
+    searchContainer: {
         height: "40px",
         display: 'flex',
         flexDirection: 'row',
@@ -176,7 +183,10 @@ const styles = theme => ({
         fontSize: "12px",
         color: "white",
         fontWeight: 700
-    }
+    },
+    textField: {
+        padding: '5px 10px',
+    },
 });
 
 export default styles;

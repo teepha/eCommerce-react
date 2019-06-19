@@ -5,6 +5,10 @@ import {bindActionCreators} from 'redux';
 import {connect} from "react-redux";
 import SearchIcon from '@material-ui/icons/Search';
 import Menu from '@material-ui/icons/Menu';
+import {
+    NavDropdown,
+} from 'react-bootstrap';
+import { LinkContainer } from 'react-router-bootstrap';
 import { Link }  from 'react-router-dom';
 import styles from './styles';
 import * as productActions from "../../../../store/actions/products";
@@ -45,7 +49,7 @@ class NavBar extends React.Component {
             brand
         } = this.props;
 
-        const {departments, cartItems} = this.props;
+        const {departments, cartItems, categories} = this.props;
 
         const brandComponent = <Link to={'/'} style={{textDecoration: 'none'}}><Button className={classes.brand}>{brand}</Button></Link>;
 
@@ -59,15 +63,30 @@ class NavBar extends React.Component {
                         <Hidden mdDown>
                         <div className={classes.linksContainer}>
                             {
-                                departments.length > 0 ? departments.map((item) => {
-                                    return (<Button key={item.department_id} classes={{
-                                        root: classes.button
-                                    }}>
-                                        <Link key={item.department_id} to={`/department/${item.department_id}`} className={classes.navLink}>
-                                            {item.name}
-                                        </Link>
-                                    </Button>)
-                                }) : <CircularProgress size={20} color="inherit"/>
+                                departments.length ?
+                                departments.map(department => (
+                                    <NavDropdown
+                                        key={department.department_id}
+                                        title={department.name}
+                                        id="basic-nav-dropdown"
+                                    >
+                                        {categories.count && categories.rows.map(category => {
+                                            return category.department_id === department.department_id ? (
+                                                <LinkContainer
+                                                    key={category.category_id}
+                                                    to={`/department/${department.department_id}/category/${category.category_id}`}
+                                                >
+                                                <NavDropdown.Item
+                                                    onClick={() => {}}
+                                                >
+                                                    {category.name}
+                                                </NavDropdown.Item>
+                                                </LinkContainer>
+                                            ) : null
+                                        }
+                                        )}
+                                    </NavDropdown>
+                                )) : <CircularProgress size={20} color="inherit"/>
                             }
                         </div>
                         </Hidden>

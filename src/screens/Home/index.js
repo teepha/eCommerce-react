@@ -5,11 +5,9 @@ import {
     CircularProgress,
     Radio,
     Checkbox,
-    List,
-    ListItem,
-    ListItemText,
     Button,
-    Fab
+    Fab,
+    TextField
 } from '@material-ui/core';
 import {Slider} from 'material-ui-slider';
 import withWidth from '@material-ui/core/withWidth';
@@ -20,8 +18,6 @@ import connect from 'react-redux/es/connect/connect';
 import FiberManualRecord from '@material-ui/icons/FiberManualRecord';
 import * as productActions from '../../store/actions/products'
 import TextGrid from '../../components/TextGrid'
-import departmentCategories from "../../store/reducers/categories/categories_in_department.reducer";
-import byDepartment from "../../store/reducers/products/department_products.reducer";
 import styles from './styles';
 import {Container, Section} from '../../components/Layout';
 import ListProduct from '../../components/ListProduct';
@@ -29,7 +25,6 @@ import Banner from '../../components/Banner';
 import SubscribeBar from '../../components/SubscribeBar';
 import * as categoriesActions from '../../store/actions/categories'
 
-const brands = ['Ralph Lauren', 'Nike', 'Hugo Boss', 'Tommy Hilfiger', 'Gucci', 'Burberry', 'Lacoste', 'Adidas'];
 
 const initialState = {
     color: 'a',
@@ -40,14 +35,6 @@ const initialState = {
     XL: false,
     min: 100,
     max: 375,
-    'Ralph Lauren': false,
-    'Nike': false,
-    'Hugo Boss': false,
-    'Tommy Hilfiger': false,
-    'Gucci': false,
-    'Burberry': false,
-    'Lacoste': false,
-    'Adidas': false
 };
 
 class Home extends Component {
@@ -127,6 +114,13 @@ class Home extends Component {
     componentDidMount() {
         const {match: {params}} = this.props;
 
+    }
+
+    componentDidUpdate(prevProps, prevState) {
+        // reload when url changes to fetch correct products
+        if(prevProps.location.pathname !== this.props.location.pathname) {
+            window.location.reload();
+        }
     }
 
 
@@ -306,25 +300,21 @@ class Home extends Component {
                                                 <div className={classes.rangesText}>{`£ ${max}`}</div>
                                             </div>
                                         </div>
-                                        <div className={classes.brandBlock}>
+                                        <div className={classes.sliderBlock}>
                                             <div className={classes.titleContainer}>
-                                    <span className={classes.controlsTitle}>
-                                        Brand
-                                    </span>
+                                                <span className={classes.controlsTitle}>
+                                                    Search keyword
+                                                </span>
                                             </div>
-                                            <div className={classes.brandListContainer}>
-                                                <List>
-                                                    {brands.map(value => (
-                                                        <ListItem key={value} role={undefined} dense button
-                                                                  onClick={this.handleBrandToggle(value)}
-                                                                  style={{padding: "5px"}}>
-                                                            <Checkbox style={{padding: 0}} checked={this.state[value]}
-                                                                      tabIndex={-1}
-                                                                      disableRipple/>
-                                                            <ListItemText primary={value}/>
-                                                        </ListItem>
-                                                    ))}
-                                                </List>
+                                            <div className={classes.searchContainer}>
+                                                <TextField
+                                                    inputProps={{
+                                                        className: classes.textField,
+                                                    }}
+                                                    placeholder="Enter a keyword to search..."
+                                                    margin="dense"
+                                                    variant="outlined"
+                                                />
                                             </div>
                                         </div>
                                         <div className="w-full py-4">
@@ -393,4 +383,8 @@ function mapStateToProps({products, categories, departments}) {
     }
 }
 
-export default withWidth()(withStyles(styles, {withTheme: true})(withRouter(connect(mapStateToProps, mapDispatchToProps)(Home))));
+export default withWidth()(
+        withStyles(styles, {withTheme: true})(withRouter(
+            connect(mapStateToProps, mapDispatchToProps)(Home))
+        )
+    );
