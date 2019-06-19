@@ -2,11 +2,8 @@ import React, {Component} from 'react';
 import {Button, InputAdornment, withStyles} from '@material-ui/core';
 import EmailIcon from '@material-ui/icons/Email';
 import PasswordIcon from '@material-ui/icons/VpnKey';
-import {bindActionCreators} from 'redux';
-import {connect} from 'react-redux';
 import {TextFieldFormsy} from '../../../../components/Formsy';
 import Formsy from 'formsy-react';
-import * as authActions from '../../../../store/actions/auth';
 import styles from './styles';
 
 class LoginForm extends Component {

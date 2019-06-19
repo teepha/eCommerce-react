@@ -9,7 +9,6 @@ import history from './history';
 import store from './store';
 import AppContext from './AppContext';
 import Theme from './components/System/Theme';
-import Auth from './components/Auth';
 import routes from './config/routes';
 import LayoutHandler from './layouts/LayoutHandler'
 import './styles/index.css';
@@ -27,13 +26,11 @@ function App() {
         <AppContext.Provider value={{routes}}>
             <JssProvider jss={jss} generateClassName={generateClassName}>
                 <Provider store={store}>
-                    <Auth>
-                        <Router history={history}>
-                            <Theme>
-                                <LayoutHandler/>
-                            </Theme>
-                        </Router>
-                    </Auth>
+                    <Router history={history}>
+                        <Theme>
+                            <LayoutHandler/>
+                        </Theme>
+                    </Router>
                 </Provider>
             </JssProvider>
         </AppContext.Provider>
