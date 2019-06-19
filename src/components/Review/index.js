@@ -22,14 +22,14 @@ class Banner extends Component {
                         />
                     </div>
                     <div className="w-full pt-4">
-                        <div className={`review-text ${classes.reviewNameText}`}>
+                        <div className={classes.reviewNameText}>
                             {name}
                         </div>
                     </div>
                 </div>
                 <div className="w-3/4">
                     <div className="w-full">
-                        <div className={classes.reviewText}>
+                        <div className={`review-text ${classes.reviewText}`}>
                             {review}
                         </div>
                     </div>

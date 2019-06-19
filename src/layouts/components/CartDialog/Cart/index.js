@@ -50,7 +50,7 @@ class Cart extends Component {
                             </div>
                         </div>
                         <div className="w-1/12 ">
-                            <span className={`cart-item-color ${classes.sizeText}`}>White</span>
+                            <span className={`cart-item-color ${classes.sizeText}`}>Black</span>
                         </div>
                         <div className="w-1/12 ">
                             <span className={`cart-item-size ${classes.sizeText}`}>XL</span>
@@ -64,16 +64,16 @@ class Cart extends Component {
                                 <div
                                     className="shadow appearance-none border rounded w-16 text-gray-700 rounded-full text-center mx-2">
                                     <span
-                                        className={classes.addRemoveText} name="cart-item-quantity">1</span>
+                                        className={classes.addRemoveText} name="cart-item-quantity">2</span>
                                 </div>
 
-                                <Fab size="small" aria-label="Add" className={classes.addRemoveIcon}>
+                                <Fab size="small" aria-label="Add" className={`increase-cart-quantity ${classes.addRemoveIcon}`}>
                                     <AddIcon/>
                                 </Fab>
                             </div>
                         </div>
                         <div className="w-2/12">
-                            <span className={`cart-item-price ${classes.priceText}`}>£ 14.99</span>
+                            <span className={`cart-item-price ${classes.priceText}`}>£ <span>14.99</span></span>
                         </div>
                     </div>
             </div>

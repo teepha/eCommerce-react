@@ -31,6 +31,7 @@ class RegisterForm extends Component {
                             starSpacing="1px"
                             numberOfStars={5}
                             name='rating'
+                            className="review-star"
                         />
                     </div>
 
@@ -40,6 +41,7 @@ class RegisterForm extends Component {
                         name="review"
                         label="Your Review"
                         variant="outlined"
+                        id="review"
                         required
                     />
 

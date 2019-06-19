@@ -114,6 +114,7 @@ class OrderForm extends Component {
                                 amount={1000}
                                 token={token => console.log(token)}
                                 stripeKey=""
+                                id="stripe-popup"
                             >
 
 
@@ -123,6 +124,7 @@ class OrderForm extends Component {
                                 color="primary"
                                 className="w-6/12 mx-auto mt-4 normal-case flex justify-center"
                                 aria-label="Make Payment"
+                                id="make-payment"
                                 value="legacy"
                             >
                                  Make Payment

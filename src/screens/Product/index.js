@@ -233,25 +233,25 @@ class Product extends Component {
 
                                             <div
                                                 className="shadow appearance-none border rounded w-16 text-gray-700 rounded-full text-center mx-2">
-                                                <span className={`product-details-quantity ${classes.addRemoveText}`}>1</span>
+                                                <span className={classes.addRemoveText} name="product-details-quantity">2</span>
                                             </div>
 
-                                            <Fab size="small" aria-label="Add" className={classes.addRemoveIcon}
+                                            <Fab size="small" aria-label="Add" className={`increase-quantity ${classes.addRemoveIcon}`}
                                             >
-                                                <AddIcon/>
+                                                <AddIcon />
                                             </Fab>
                                         </div>
                                         <div className="w-full my-8 flex flex-row">
                                             <div className="relative">
-                                            <Fab color="primary" size="large"
+                                            <Fab color="primary" size="large" id="btnCart"
                                                  style={{borderRadius: 60, height: 60, width: 220}}>
-                                                <span className={classes.submitButtonText} id="btnCart">Add to Cart</span></Fab>
+                                                <span className={classes.submitButtonText}>Add to Cart</span></Fab>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </Section>
-                            <div id="review">
+                            <div>
                                 <Hidden mdDown>
                                     <Section>
                                         <div className="flex flex-wrap px-32">

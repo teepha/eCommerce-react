@@ -67,7 +67,7 @@ class CartDialog extends Component {
                                 <span className={classes.titleText}>1 items in Your Cart</span>
                             </div>
                             <div className="w-1/4 flex justify-start">
-                                <span className={classes.totalText} onClick={this.handleClose.bind(this)} id="cartTotalPriceValue">Total: £ 14.99</span>
+                                <span className={classes.totalText} onClick={this.handleClose.bind(this)}>Total: £ <span id="cartTotalPriceValue">0</span></span>
                             </div>
                             <div className="w-1/4 flex justify-end">
                                 <span className={classes.closeButton} onClick={this.handleClose.bind(this)}>X</span>

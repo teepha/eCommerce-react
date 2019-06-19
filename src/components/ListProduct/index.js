@@ -36,8 +36,8 @@ class ListProduct extends Component {
                 </span>
                 </div>
 
-                <Link to={`/product/${product.product_id}`} className="product-card-link">
-                    <div className={classes.addButtonContainer}>
+                <Link to={`/product/${product.product_id}`}>
+                    <div className={`product-card-link ${classes.addButtonContainer}`}>
                         <Fab color="primary" size="small" className={classes.addButton}>
                             <span className={classes.addButtonText}>View</span>
                         </Fab>

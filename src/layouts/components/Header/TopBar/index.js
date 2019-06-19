@@ -35,7 +35,7 @@ class TopBar extends React.Component {
                             Hi! <Link onClick={() => {
                             this.props.showAuth(false)
                         }} className={classes.authLink} id="btnSignIn" style={{color: 'red'}}>
-                            Sign In
+                            Sign in
                         </Link> or <Link onClick={() => {
                             this.props.showAuth(true)
                         }} className={classes.authLink} id="btnRegister" style={{color: 'red'}}>
@@ -82,7 +82,7 @@ class TopBar extends React.Component {
                         </Badge>
                     </div>
                     <div>
-                        <div className={classes.yourBag}>Your Bag:</div>
+                        <div className={classes.yourBag} style={{color: 'black'}}>Your Bag: $<span id="menuCartTotalPrice">14.99</span></div>
                     </div>
                 </Toolbar>
             </AppBar>

@@ -125,8 +125,9 @@ class NavBar extends React.Component {
                                 <Badge classes={{
                                     badge: classes.badge
                                 }}
-                                                               badgeContent={1}
-                                                               color="primary">
+                                    id="menuCartQuantity"
+                                    badgeContent={2}
+                                    color="primary">
                                     <img alt="Shopping Cart Icon" src="/assets/icons/shopping-cart-white.svg"/>
                                 </Badge>
                             </div>
