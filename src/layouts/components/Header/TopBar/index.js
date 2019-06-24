@@ -32,24 +32,30 @@ class TopBar extends React.Component {
             <AppBar className={classes.topBar}>
                 <Toolbar className={classes.toolbar}>
                     <div className={classes.authText}>
-                            Hi! <Link onClick={() => {
-                            this.props.showAuth(false)
-                        }} className={classes.authLink} id="btnSignIn" style={{color: 'red'}}>
-                            Sign in
-                        </Link> or <Link onClick={() => {
-                            this.props.showAuth(true)
-                        }} className={classes.authLink} id="btnRegister" style={{color: 'red'}}>
-                            Register
-                        </Link>
-                        </div> :
-                        <div className={classes.authText}>
-                            Hi Charles! <Link className={classes.authLink} style={{color: 'red'}}>
+                            <span>Hi!</span>
+                            <Link onClick={() => {
+                              this.props.showAuth(false)
+                              }} className={classes.authLink} id="btnSignIn" style={{color: 'red'}}>
+                              Sign in
+                            </Link>
+                            <span>or</span>
+                            <Link onClick={() => {
+                              this.props.showAuth(true)
+                              }} className={classes.authLink} id="btnRegister" style={{color: 'red'}}>
+                              Register
+                          </Link>
+                    </div> :
+                    <div className={classes.authText}>
+                            <span>Hi Charles!</span>
+                            <Link className={classes.authLink} style={{color: 'red'}}>
                             My Profile
-                        </Link> | <Link className={classes.authLink} id="btnLogout" style={{color: 'red'}}>
-                            Logout
-                        </Link>
-                        </div>
-                    <Hidden mdDown>
+                            </Link>
+                            <span>|</span>
+                            <Link className={classes.authLink} id="btnLogout" style={{color: 'red'}}>
+                             Logout
+                            </Link>
+                    </div>
+                    <Hidden mdDown className={classes.divTopBar}>
                         <div className={classes.linksContainer}>
                             {
                                 links.map((item, index) => (
@@ -62,26 +68,26 @@ class TopBar extends React.Component {
                             }
                         </div>
                     </Hidden>
-                    <Hidden mdDown>
-                    <div className={classes.currencyIconContainer}>
-                        <span className="flag-icon flag-icon-gb"/>
-                    </div>
-                    <div className={classes.currencyContainer}>
-                        <div className={classes.currencyText}>GBR</div>
-                    </div>
+                    <Hidden mdDown className={classes.divTopBar}>
+                      <div className={classes.currencyIconContainer}>
+                          <span className="flag-icon flag-icon-gb"/>
+                      </div>
+                      <div className={classes.currencyContainer}>
+                          <div className={classes.currencyText}>GBR</div>
+                      </div>
                     </Hidden>
-                    <div className={classes.iconContainer} id="menuCartLink" onClick={() => {
-                        this.props.showCart()
-                    }}>
-                        <Badge 
-                            classes={{badge: classes.badge}}
-                            badgeContent={1}
-                            color="primary"
-                        >
-                            <img alt="Shopping Cart Icon" src="/assets/icons/shopping-cart-black.svg"/>
-                        </Badge>
-                    </div>
-                    <div>
+                    <div className={classes.divTopBar}>
+                        <div className={classes.iconContainer} id="menuCartLink" onClick={() => {
+                            this.props.showCart()
+                        }}>
+                            <Badge
+                                classes={{badge: classes.badge}}
+                                badgeContent={1}
+                                color="primary"
+                            >
+                                <img alt="Shopping Cart Icon" src="/assets/icons/shopping-cart-black.svg"/>
+                            </Badge>
+                        </div>
                         <div className={classes.yourBag} style={{color: 'black'}}>Your Bag: $<span id="menuCartTotalPrice">14.99</span></div>
                     </div>
                 </Toolbar>
