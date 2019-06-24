@@ -61,8 +61,8 @@ const styles = theme => ({
     authText: {
         fontWeight: "700",
         fontFamily: 'Montserrat',
-        fontSize: "15px",
-        cursor: "pointer",
+        fontSize: "16px",
+        //cursor: "pointer",
         color: theme.palette.dark
     },
     currencyText: {
@@ -80,7 +80,7 @@ const styles = theme => ({
     yourBag: {
         fontWeight: "700",
         fontFamily: 'Montserrat',
-        fontSize: "15px"
+        fontSize: "16px"
     },
     badge: {
         fontWeight: 700,
