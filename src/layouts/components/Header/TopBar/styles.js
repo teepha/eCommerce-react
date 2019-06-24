@@ -63,7 +63,15 @@ const styles = theme => ({
         fontFamily: 'Montserrat',
         fontSize: "16px",
         //cursor: "pointer",
-        color: theme.palette.dark
+        color: theme.palette.darkn,
+      '& span': {
+        color: '#2e2e2e',
+        fontWeight: "700",
+        fontFamily: 'Montserrat'
+      },
+      '& a': {
+        margin: '0 3px'
+      },
     },
     currencyText: {
         fontWeight: "700",
@@ -76,6 +84,9 @@ const styles = theme => ({
     },
     currencyIconContainer: {
         width: "30px"
+    },
+    divTopBar: {
+      display: "inline-flex"
     },
     yourBag: {
         fontWeight: "700",
