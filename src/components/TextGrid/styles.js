@@ -7,7 +7,7 @@ const styles = theme => ({
         color: "white",
         fontWeight: "700",
         fontFamily: 'Montserrat',
-        fontSize: "15px",
+        fontSize: "18px",
         cursor: "pointer",
         textTransform: "capitalize",
         '&:hover': {
@@ -18,7 +18,7 @@ const styles = theme => ({
     title: {
         color: theme.palette.dark,
         fontFamily: 'Playfair Display',
-        fontSize: '48px',
+        fontSize: '58px',
         fontWeight: 700
     }
 });
