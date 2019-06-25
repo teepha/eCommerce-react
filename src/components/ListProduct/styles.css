@@ -1,0 +1,32 @@
+
+/* Overriding product card styles */
+
+.product-card{
+  background-color: #fff;
+  box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.15);
+  -webkit-transition: all 0.2s;
+  transition: all 0.2s;
+}
+
+.product-info-block{
+  opacity: 1;
+  -webkit-transition: all 0.2s;
+  transition: all 0.2s;
+}
+
+.product-card:hover{
+  box-shadow: 0 10px 20px 0 rgba(0, 0, 0, 0.3);
+  -webkit-transition: all 0.2s;
+  transition: all 0.2s;
+}
+
+.product-card:hover .product-info-block{
+  opacity: 0.9;
+  -webkit-transition: all 0.2s;
+  transition: all 0.2s;
+}
+
+.productTextDiv{
+  padding: 20px 10px;
+  text-align: center;
+}
