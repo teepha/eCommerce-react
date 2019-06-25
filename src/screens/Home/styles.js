@@ -4,9 +4,10 @@ const styles = theme => ({
         paddingTop: "132px"
     },
     controlContainer: {
-        padding: "20px",
+        //padding: "20px",
         width: "100%",
-        height: "697px"
+        //height: "697px",
+        boxShadow: '0 0 0 transparent !important'
     },
     contain: {
         display: 'flex',
@@ -52,7 +53,7 @@ const styles = theme => ({
     controlsTopTitle: {
         fontWeight: "700",
         fontFamily: 'Lucida Grande',
-        fontSize: "16px",
+        fontSize: "18px",
         color: theme.palette.dark
     },
     controlsTitle: {
@@ -93,25 +94,46 @@ const styles = theme => ({
     },
     filterBlock: {
         width: "100%",
-        borderBottom: `1px solid rgba(0, 0, 0, 0.1)`
+        padding: '20px',
+        backgroundColor: '#fafafa',
+        borderBottom: '1px solid rgba(0, 0, 0, 0.1)',
+        boxShadow: '0 2px 2px 0 rgba(0, 0, 0, 0.15)'
+    },
+    filterBodyContainer: {
+        width: "100%",
+        padding: '10px 0',
+        backgroundColor: '#fff',
+        borderBottom: '1px solid rgba(0, 0, 0, 0.1)',
+        boxShadow: '0 2px 2px 0 rgba(0, 0, 0, 0.15)'
+    },
+    footerBlock: {
+        width: "100%",
+        padding: '20px',
+        backgroundColor: '#fafafa',
+        borderBottom: '1px solid rgba(0, 0, 0, 0.1)',
+        boxShadow: '0 2px 2px 0 rgba(0, 0, 0, 0.15)',
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center"
     },
     colorBlock: {
-        paddingTop: "10px",
-        height: "80px",
+        padding: "5px 20px",
         width: "100%"
     },
     sizesBlock: {
-        paddingTop: "10px",
-        height: "110px",
+        padding: "5px 20px",
         width: "100%"
     },
     sliderBlock: {
-        paddingTop: "10px",
-        height: "110px",
+        padding: "5px 20px",
+        width: "100%"
+    },
+    searchBlock: {
+        padding: "10px 20px",
         width: "100%"
     },
     brandBlock: {
-        paddingTop: "10px",
+        padding: "20px",
         height: "180px",
         width: "100%"
     },
@@ -141,10 +163,7 @@ const styles = theme => ({
         paddingBottom: "15px",
     },
     colorRadiosContainer: {
-        height: "50px",
-        display: 'flex',
-        flexDirection: 'row',
-        justifyContent: 'center'
+        //height: "50px"
     },
     sliderContainer: {
         height: "40px",
@@ -156,14 +175,18 @@ const styles = theme => ({
         height: "40px",
         display: 'flex',
         flexDirection: 'row',
-        justifyContent: 'space-between'
+        justifyContent: 'space-between',
+        '& div':{
+          width: '100%'
+        }
     },
     rangesText: {
-        lineHeight: "24px",
-        fontSize: "12px",
+        lineHeight: "0",
+        fontFamily: 'Open Sans',
+        fontSize: '12px',
         padding: "5px",
         color: theme.palette.darker,
-        fontWeight: 700
+        fontWeight: 'lighter'
     },
     brandListContainer: {
         height: "150px",
@@ -171,21 +194,42 @@ const styles = theme => ({
         overflowX: "hidden"
     },
     clearText: {
+      textTransform: 'capitalize',
         cursor: "pointer",
-        fontSize: "10px",
-        fontWeight: 700,
+        fontSize: "12px",
+        fontWeight: 'lighter',
         marginLeft: "10px",
+        color: theme.palette.primary.main
+    },
+    boldIcon: {
+        fontSize: "16px",
+        fontWeight: 'bold',
         color: theme.palette.primary.main
     },
     submitButtonText: {
         textTransform: "capitalize",
         fontFamily: "Montserrat",
         fontSize: "12px",
-        color: "white",
-        fontWeight: 700
+        fontWeight: 'lighter',
+        color: "white"
     },
     textField: {
         padding: '5px 10px',
+    },
+    filterSearchInput: {
+        padding: '7px 10px',
+        fontSize: '14px',
+        width: '100%'
+    },
+    coloredButton: {
+        boxShadow: '0 0 0 transparent'
+    },
+    isGrey: {
+      color: '#B4B4B4'
+    },
+    filterItems: {
+      fontFamily: 'Open Sans',
+      fontSize: '13px'
     },
 });
 
