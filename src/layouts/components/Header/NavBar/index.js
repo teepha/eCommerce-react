@@ -23,6 +23,21 @@ class NavBar extends React.Component {
         this.setState({ mobileOpen: !this.state.mobileOpen });
     }
 
+    componentDidMount(){
+      window.addEventListener('scroll', (event) => {
+        const scrollpos = window.scrollY;
+         if(scrollpos > 10){
+           this.setState({
+              activeClass: 'is-scrolled'
+           })
+         }else{
+             this.setState({
+                activeClass: 'is-ontop'
+             })
+         }
+      });
+    }
+
     render() {
 
         const {
@@ -37,7 +52,7 @@ class NavBar extends React.Component {
 
         return (
             <div>
-                <AppBar className={classes.navBar}>
+                <AppBar className={`mainHeaderHolder ${classes.navBar + ' ' + this.state.activeClass}`}>
                     <Toolbar className={classes.toolbar}>
                         <div className={classes.flex}>
                             {brandComponent}

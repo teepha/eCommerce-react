@@ -84,7 +84,7 @@ const styles = theme => ({
         textTransform: "capitalize",
         '&:hover': {
             textDecoration: 'none',
-            color: theme.palette.primary.main
+            color: '#F62F5E'
         }
     },
     navDrawerLink: {
@@ -104,7 +104,7 @@ const styles = theme => ({
     linksContainer: {
         display: "flex",
         flexGrow: 1,
-        justifyContent: "flex-end",
+        justifyContent: "flex-start",
         paddingRight: "27px"
     },
     button: {
@@ -127,7 +127,8 @@ const styles = theme => ({
         },
     },
     searchIcon: {
-        width: theme.spacing.unit * 9,
+        //width: theme.spacing.unit * 9,
+        width: '50px',
         height: '100%',
         position: 'absolute',
         pointerEvents: 'none',
@@ -143,7 +144,8 @@ const styles = theme => ({
         paddingTop: theme.spacing.unit,
         paddingRight: theme.spacing.unit,
         paddingBottom: theme.spacing.unit,
-        paddingLeft: theme.spacing.unit * 10,
+        //paddingLeft: theme.spacing.unit * 10,
+        paddingLeft: '40px',
         transition: theme.transitions.create('width'),
         width: '100%',
         [theme.breakpoints.up('sm')]: {
@@ -152,6 +154,12 @@ const styles = theme => ({
                 width: 200,
             },
         },
+        fontFamily: 'Open Sans',
+        fontSize: '14px',
+        fontWeight: 'bold',
+        fontStyle: 'normal',
+        fontStretch: 'normal',
+        letterSpacing: '0.5px'
     },
     dropdownLink: {
         "&,&:hover,&:focus": {
