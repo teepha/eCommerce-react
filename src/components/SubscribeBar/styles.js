@@ -4,7 +4,7 @@ const styles = theme => ({
     subscribeBar: {
         color: "white",
         height: "72px",
-        backgroundColor: theme.palette.medium,
+        backgroundColor: '#efefef',
         flex: "1",
         alignItems: "center"
     },
@@ -104,7 +104,8 @@ const styles = theme => ({
         },
     },
     searchIcon: {
-        width: theme.spacing.unit * 9,
+        //width: theme.spacing.unit * 9,
+        width: '50px',
         height: '100%',
         color: theme.palette.dark,
         position: 'absolute',
@@ -116,18 +117,28 @@ const styles = theme => ({
     inputRoot: {
         color: theme.palette.dark,
         width: '100%',
+        fontFamily: 'Open Sans',
+        fontSize: '15px',
+        fontWeight: 'bold'
     },
     inputInput: {
         paddingTop: theme.spacing.unit,
         paddingRight: theme.spacing.unit,
         paddingBottom: theme.spacing.unit,
-        paddingLeft: theme.spacing.unit * 10,
+        //paddingLeft: theme.spacing.unit * 10,
+        paddingLeft: '50px',
         transition: theme.transitions.create('width'),
         width: '100%',
         [theme.breakpoints.up('sm')]: {
             width: 120,
+            '&:hover': {
+                backgroundColor: '#fff',
+                borderRadius: '100px'
+            },
             '&:focus': {
                 width: 200,
+                backgroundColor: '#fff',
+                borderRadius: '100px'
             },
         },
     },
@@ -142,7 +153,8 @@ const styles = theme => ({
         borderRadius: 24,
         height: 35,
         width: 90,
-        marginLeft: "30px"
+        marginLeft: "30px",
+        boxShadow: '0 0 0 transparent'
     },
     subscribeText: {
         textTransform: "capitalize",

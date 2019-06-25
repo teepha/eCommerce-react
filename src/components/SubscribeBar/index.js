@@ -2,7 +2,7 @@ import React from "react";
 import {withStyles, InputBase, Fab} from '@material-ui/core';
 import {bindActionCreators} from 'redux';
 import {connect} from "react-redux";
-import EmailIcon from '@material-ui/icons/Email';
+import EmailIcon from '@material-ui/icons/EmailOutlined';
 import styles from './styles';
 
 class SubscribeBar extends React.Component {
