@@ -1,0 +1,39 @@
+
+/* Custom CSS to override NavBar styles */
+
+.navDropdown{
+
+}
+
+.navDropdown .dropdown-toggle::after {
+  display: none;
+}
+
+.navDropdown .nav-link{
+  color: #fff;
+  font-family: Montserrat;
+  font-size: 16px;
+  font-weight: bold;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: 2.4;
+  letter-spacing: normal;
+  -webkit-transition: margin-right 0.3s;
+  transition: margin-right 0.3s;
+  padding-left: 0;
+  padding-right: 2rem;
+}
+
+.navDropdown .dropdown-menu{
+  top: 60px !important;
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+  transform: none !important;
+  -webkit-transition: all 0.3s;
+  transition: all 0.3s;
+}
+
+.navDropdown .dropdown-menu.show{
+  -webkit-transition: all 0.3s;
+  transition: all 0.3s;
+}

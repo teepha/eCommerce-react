@@ -27,11 +27,16 @@ const styles = theme => ({
     brand: {
         color: theme.palette.primary.main,
         fontFamily: "Montserrat",
-        fontSize: "24px",
+        fontSize: "26px",
         fontWeight: 700,
         letterSpacing: "4px",
         textTransform: "uppercase",
-        padding: 0
+        textDecoration: "none",
+        padding: 0,
+        '&:hover': {
+          color: theme.palette.primary.main,
+          textDecoration: "none"
+        }
     },
     appResponsive: {
         margin: "20px 10px"

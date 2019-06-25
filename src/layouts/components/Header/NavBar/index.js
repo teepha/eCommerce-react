@@ -11,6 +11,7 @@ import {
 import { Link }  from 'react-router-dom';
 import styles from './styles';
 import * as alertActions from "../../../../store/actions/alerts";
+import './style.css';
 
 class NavBar extends React.Component {
 
@@ -29,7 +30,10 @@ class NavBar extends React.Component {
             brand
         } = this.props;
 
-        const brandComponent = <Link to={'/'} style={{textDecoration: 'none'}}><Button className={classes.brand}>{brand}</Button></Link>;
+        const brandComponent =
+        <Link to={'/'} className={classes.brand}>
+          {brand}
+        </Link>
 
         return (
             <div>
@@ -42,8 +46,7 @@ class NavBar extends React.Component {
                         <div className={`departments categories ${classes.linksContainer}`}>
                             <NavDropdown
                                 title='Regional'
-                                id="basic-nav-dropdown"
-                                className="department"
+                                className="department navDropdown"
                             >
                                 <NavDropdown.Item
                                     onClick={() => {}}
@@ -67,8 +70,7 @@ class NavBar extends React.Component {
                             </NavDropdown>
                             <NavDropdown
                                 title='Nature'
-                                id="basic-nav-dropdown"
-                                className="department"
+                                className="department navDropdown"
                             >
                                 <NavDropdown.Item
                                     onClick={() => {}}
@@ -81,13 +83,12 @@ class NavBar extends React.Component {
                                 >
                                     Flower
                                 </NavDropdown.Item>
-                                    
+
                             </NavDropdown>
 
                             <NavDropdown
                                 title='Seasonal'
-                                id="basic-nav-dropdown"
-                                className="department"
+                                className="department navDropdown"
                             >
                                 <NavDropdown.Item
                                     onClick={() => {}}
@@ -101,7 +102,7 @@ class NavBar extends React.Component {
                                 >
                                     Valentine's
                                 </NavDropdown.Item>
-                                    
+
                             </NavDropdown>
                         </div>
                         </Hidden>
