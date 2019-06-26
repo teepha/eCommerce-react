@@ -83,3 +83,9 @@
   background-color: #F62F5E;
   color: #fff;
 }
+
+@media (max-width: 768px){
+  .mainHeaderHolder {
+      top: 70px;
+  }
+}

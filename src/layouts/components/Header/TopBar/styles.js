@@ -116,6 +116,24 @@ const styles = theme => ({
         flexGrow: 1,
         justifyContent: "center",
         paddingRight: "27px"
+    },
+    '@media (max-width: 768px)': {
+      topBar: {
+          display: "block",
+          height: "auto"
+      },
+      toolbar: {
+          display: "block"
+      },
+      divTopBar: {
+        display: "block",
+        width: "100%"
+      },
+      iconContainer: {
+        position: "absolute",
+        top: "13px",
+        right: "10px"
+      }
     }
 });
 
