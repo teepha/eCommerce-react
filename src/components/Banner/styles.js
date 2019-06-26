@@ -14,8 +14,9 @@ const styles = theme => ({
         backgroundImage: `url(${Image})`,
         backgroundPosition: "top center",
         backgroundRepeat: "no-repeat",
-        backgroundSize: "contain",
-        height: 408,
+        backgroundSize: "cover",
+        height: 'auto',
+        minHeight: '300px'
     },
     navLink: {
         color: "white",
@@ -51,6 +52,18 @@ const styles = theme => ({
         fontFamily: 'Montserrat',
         fontSize: '24px',
         fontWeight: 700
+    },
+    '@media (max-width: 768px)': {
+      paperContainer: {
+          backgroundSize: "cover"
+      },
+      gridItemsContainer: {
+          paddingLeft: '20px',
+          paddingTop: '40px'
+      },
+      gridSubtitle: {
+          width: 'auto'
+      }
     }
 });
 
