@@ -11,6 +11,7 @@ import {connect} from 'react-redux';
 import Cart from './Cart'
 import * as Actions from '../../../store/actions/alerts';
 import OrderForm from "./Forms/OrderForm";
+import Close from '@material-ui/icons/Close';
 import styles from './styles';
 
 function PaperComponent(props) {
@@ -62,15 +63,15 @@ class CartDialog extends Component {
                     aria-labelledby="draggable-dialog-title"
                 >
                     <DialogContent style={{overflow: 'hidden'}}>
-                        <div className="flex mb-4 h-8">
-                            <div className="w-1/2">
+                        <div className="flex">
+                            <div className="w-3/5 sm-12">
                                 <span className={classes.titleText}>1 items in Your Cart</span>
                             </div>
-                            <div className="w-1/4 flex justify-start">
+                            <div className="w-1/5 sm-12 flex justify-end">
                                 <span className={classes.totalText} onClick={this.handleClose.bind(this)}>Total: £ <span id="cartTotalPriceValue">0</span></span>
                             </div>
-                            <div className="w-1/4 flex justify-end">
-                                <span className={classes.closeButton} onClick={this.handleClose.bind(this)}>X</span>
+                            <div className="w-1/5 sm-12 flex justify-end">
+                                <Close onClick={this.handleClose.bind(this)} style={{cursor: 'pointer'}} />
                             </div>
                         </div>
                         <div className="w-full flex flex-grow flex-col" style={{height: "450px"}}>
@@ -80,15 +81,17 @@ class CartDialog extends Component {
                             <div className="w-1/2">
                                 <Fab color="primary"
                                      onClick={activeStep === 0 ? this.handleClose.bind(this) : this.handlePrevious.bind(this)}
-                                     style={{borderRadius: 48, height: 48, width: 160}}>
+                                     style={{borderRadius: 48, height: 48, width: 160}}
+                                     className={classes.cartButton}>
                                     <span
                                         className={classes.submitButtonText}>{activeStep === 0 ? 'Back to Shop' : 'Back'}</span></Fab>
                             </div>
                             <div className="w-1/2 flex justify-end">
                                 <Fab color="primary"
                                      onClick={this.handleNext.bind(this)}
-                                     style={{borderRadius: 48, height: 48, width: 160}}>
-                                    { activeStep === 0 ? 
+                                     style={{borderRadius: 48, height: 48, width: 160}}
+                                     className={classes.cartButton}>
+                                    { activeStep === 0 ?
                                     <span className={classes.submitButtonText} id="btnCheckout">Checkout</span>
                                     : <span className={classes.submitButtonText} id="btnNext">Next</span>}
                                     </Fab>

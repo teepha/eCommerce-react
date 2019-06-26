@@ -31,6 +31,9 @@ const styles = theme => ({
         fontSize: "16px",
         color: "white",
         fontWeight: 700
+    },
+    cartButton: {
+        boxShadow: '0 0 0 transparent'
     }
 
 });
