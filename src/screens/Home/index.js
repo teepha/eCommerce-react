@@ -34,6 +34,7 @@ import {Container, Section} from '../../components/Layout';
 import ListProduct from '../../components/ListProduct';
 import Banner from '../../components/Banner';
 import SubscribeBar from '../../components/SubscribeBar';
+import './styles.css';
 
 
 class Home extends Component {
@@ -61,8 +62,8 @@ class Home extends Component {
                         </Section>
 
                         <Section>
-                            <div className="flex mb-4">
-                                <div className="w-1/4">
+                            <div className="flex mb-4 contentHolder">
+                                <div className="w-1/4 filterSection">
                                     <Paper className={classes.controlContainer} elevation={1}>
                                         <div className={classes.filterBlock}>
                                             <div className={classes.titleContainer}>
@@ -234,7 +235,7 @@ class Home extends Component {
                                         </div>
                                     </Paper>
                                 </div>
-                                <div className="w-3/4 flex flex-wrap ml-6">
+                                <div className="w-3/4 flex flex-wrap ml-6 productsSection">
                                     {currentProducts.map((product, index) => (
                                         <div key={index} className="w-full sm:w-1/2 md:w-1/2 lg:w-1/2 xl:w-1/3 mb-4">
                                             <ListProduct product={product}/>
