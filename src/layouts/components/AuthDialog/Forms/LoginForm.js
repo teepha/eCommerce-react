@@ -5,6 +5,7 @@ import PasswordIcon from '@material-ui/icons/VpnKey';
 import {TextFieldFormsy} from '../../../../components/Formsy';
 import Formsy from 'formsy-react';
 import styles from './styles';
+import './styles.css';
 
 class LoginForm extends Component {
 
@@ -46,39 +47,48 @@ class LoginForm extends Component {
                         required
                     />
 
-                    <Button
-                        type="submit"
-                        variant="contained"
-                        color="primary"
-                        className="w-full mx-auto mt-16 normal-case"
-                        aria-label="LOG IN"
-                        value="legacy"
-                        id="btnFormSignIn"
-                    >
-                        Login
-                    </Button>
-                    <div className="flex flex-row justify-between">
-                        <Button
-                            type="submit"
-                            variant="contained"
-                            color="primary"
-                            className="w-5\12 mx-auto mt-16 normal-case btnFacebook"
-                            aria-label="LOG IN"
-                            value="legacy"
-                        >
-                            Login with Facebook
-                        </Button>
-                        <Button
-                            type="submit"
-                            variant="contained"
-                            color="primary"
-                            className="w-5\12 mx-auto mt-16 normal-case"
-                            aria-label="LOG IN"
-                            value="legacy"
-                            id="btnGoogle"
-                        >
-                            Login with Google
-                        </Button>
+                    <div className="buttonsHolder">
+                      <Button
+                          type="submit"
+                          variant="contained"
+                          color="primary"
+                          className="logInBtn"
+                          aria-label="LOG IN"
+                          value="legacy"
+                          id="btnFormSignIn"
+                      >
+                          Login
+                      </Button>
+
+                      <div>- OR -</div>
+
+                      <div className="socialButtonsHolder">
+                        <div>
+                          <Button
+                              type="submit"
+                              variant="contained"
+                              color="secondary"
+                              className="btnFacebook"
+                              aria-label="LOG IN"
+                              value="legacy"
+                          >
+                              Login with Facebook
+                          </Button>
+                        </div>
+                        <div>
+                          <Button
+                              type="submit"
+                              variant="contained"
+                              color="secondary"
+                              className="btnGoogle"
+                              aria-label="LOG IN"
+                              value="legacy"
+                              id="btnGoogle"
+                          >
+                              Login with Google
+                          </Button>
+                        </div>
+                      </div>
                     </div>
 
                 </Formsy>

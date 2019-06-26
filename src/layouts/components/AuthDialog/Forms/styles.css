@@ -1,0 +1,16 @@
+
+/* Override Login/Register forms styles */
+
+.buttonsHolder{
+  display: block;
+  width: 100%;
+  text-align: center;
+}
+
+.buttonsHolder div{
+  margin: 20px 0;
+}
+
+.buttonsHolder button{
+  margin-bottom: 5px;
+}
