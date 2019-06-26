@@ -16,7 +16,7 @@ import styles from './styles';
 
 function PaperComponent(props) {
     return (
-        <Paper {...props} style={{width: "auto", height: "auto"}}/>
+        <Paper {...props} style={{width: "auto", maxWidth: "450px", height: "auto"}}/>
     );
 }
 
