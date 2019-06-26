@@ -52,15 +52,15 @@ class LoginForm extends Component {
                           type="submit"
                           variant="contained"
                           color="primary"
-                          className="logInBtn"
+                          className="w-full logInBtn"
                           aria-label="LOG IN"
                           value="legacy"
                           id="btnFormSignIn"
                       >
-                          Login
+                          Log In
                       </Button>
 
-                      <div>- OR -</div>
+                      <div>- or -</div>
 
                       <div className="socialButtonsHolder">
                         <div>
@@ -68,7 +68,7 @@ class LoginForm extends Component {
                               type="submit"
                               variant="contained"
                               color="secondary"
-                              className="btnFacebook"
+                              className="w-full btnFacebook"
                               aria-label="LOG IN"
                               value="legacy"
                           >
@@ -80,7 +80,7 @@ class LoginForm extends Component {
                               type="submit"
                               variant="contained"
                               color="secondary"
-                              className="btnGoogle"
+                              className="w-full btnGoogle"
                               aria-label="LOG IN"
                               value="legacy"
                               id="btnGoogle"

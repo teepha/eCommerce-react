@@ -14,3 +14,8 @@
 .buttonsHolder button{
   margin-bottom: 5px;
 }
+
+.btnFacebook, .btnGoogle{
+  text-transform: capitalize;
+  min-width: 230px;
+}

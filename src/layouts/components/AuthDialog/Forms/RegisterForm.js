@@ -67,7 +67,7 @@ class RegisterForm extends Component {
                         type="submit"
                         variant="contained"
                         color="primary"
-                        className="w-full mx-auto mt-16 normal-case"
+                        className="w-full mx-auto normal-case"
                         aria-label="LOG IN"
                         value="legacy"
                         id="btnFormRegister"

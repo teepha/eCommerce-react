@@ -11,11 +11,12 @@ import {connect} from 'react-redux';
 import LoginForm from './Forms/LoginForm';
 import RegisterForm from './Forms/RegisterForm';
 import * as Actions from '../../../store/actions/alerts';
+import Close from '@material-ui/icons/Close';
 import styles from './styles';
 
 function PaperComponent(props) {
     return (
-        <Paper {...props} style={{width: "820px", height: "600px"}}/>
+        <Paper {...props} style={{width: "auto", height: "auto"}}/>
     );
 }
 
@@ -54,18 +55,23 @@ class AuthDialog extends Component {
                 >
                     <DialogContent style={{overflow: 'hidden'}}>
                         <div className="flex mb-4 h-8">
-                            <div className="w-1/2">
-                                <span className={classes.titleText}>Login / Sign Up</span>
+                            <div className="w-3/4">
+                                {register &&
+                                  <span className={classes.titleText}>Register / Sign Up</span>
+                                }
+                                {!register &&
+                                  <span className={classes.titleText}>Log In</span>
+                                }
                             </div>
-                            <div className="w-1/2 flex justify-end">
-                                <span className={classes.closeButton} onClick={this.handleClose}>X</span>
+                            <div className="w-1/4 flex justify-end">
+                                <Close onClick={this.handleClose} style={{cursor: 'pointer'}} />
                             </div>
                         </div>
-                        <div className="w-full flex flex-grow flex-col" style={{height: "450px"}}>
+                        <div className="w-full flex flex-grow flex-col">
                             {register ? <RegisterForm/> : <LoginForm/>}
                         </div>
-                        <div className="flex mb-4">
-                            <div className="w-1/2 pl-8">
+                        <div>
+                            <div className="w-full flex justify-center">
                                 {register && <Link color="primary"
                                                    className={classes.submitButtonText}
                                                    onClick={this.handleLoginNav.bind(this)}
@@ -73,13 +79,16 @@ class AuthDialog extends Component {
                                 >
                                     Go to Login</Link>}
                             </div>
-                            <div className="w-1/2 flex justify-end pr-8">
-                                {!register && <Link color="primary"
-                                                    className={classes.submitButtonText}
-                                                    onClick={this.handleRegisterNav.bind(this)}
-                                                    style={{color: 'red'}}
-                                >
-                                    Register</Link>}
+                            <div className="w-full flex justify-center">
+                                {!register &&
+                                  <Link color="primary"
+                                    className={classes.submitButtonText}
+                                    onClick={this.handleRegisterNav.bind(this)}
+                                    style={{color: 'red', marginLeft: '3px'}}
+                                  >
+                                    Register / Sign Up
+                                  </Link>
+                                }
                             </div>
                         </div>
                     </DialogContent>
