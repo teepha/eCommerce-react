@@ -88,4 +88,7 @@
   .mainHeaderHolder {
       top: 70px;
   }
+  .mainHeaderHolder.is-ontop{
+      top: 70px;
+  }
 }
