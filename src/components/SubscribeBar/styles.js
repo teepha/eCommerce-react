@@ -162,6 +162,30 @@ const styles = theme => ({
         fontSize: "12px",
         color: "white",
         fontWeight: 700
+    },
+    '@media (max-width: 768px)': {
+      subscribeBar: {
+          height: "auto",
+          flex: "unset",
+          textAlign: "center"
+      },
+      toolbar: {
+          height: "auto",
+          flex: "unset",
+          textAlign: "center",
+          display: "block"
+      },
+      mainText: {
+          paddingTop: '20px',
+          marginBottom: '20px'
+      },
+      search: {
+          marginBottom: '20px'
+      },
+      subscribeButton: {
+          marginLeft: "0",
+          marginBottom: '20px'
+      },
     }
 });
 
