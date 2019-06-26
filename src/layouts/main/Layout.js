@@ -8,7 +8,6 @@ import Header from '../components/Header';
 import Footer from '../components/Footer';
 import AppContext from '../../AppContext';
 import systemConfig from '../../config/system';
-import SearchDisplay from '../components/SearchDisplay';
 import CartDialog from '../components/CartDialog';
 import Toast from "../../components/Alerts/Toast";
 

@@ -1,5 +1,5 @@
 /**
- * TextGrid component should be hidden by default, it should only be displayed
+ * 
  * if a user select a department and category in the navigation menu
  * - Filter should display Department and category dynamically when a user select a department and category
  *  on the navigation bar
@@ -28,7 +28,6 @@ import connect from 'react-redux/es/connect/connect';
 import FiberManualRecord from '@material-ui/icons/FiberManualRecord';
 import Close from '@material-ui/icons/Close';
 import * as productActions from '../../store/actions/products'
-import TextGrid from '../../components/TextGrid'
 import styles from './styles';
 import {Container, Section} from '../../components/Layout';
 import ListProduct from '../../components/ListProduct';
@@ -57,10 +56,6 @@ class Home extends Component {
         return (
             <div className={classes.root}>
                 <Container>
-                         <Section>
-                            <TextGrid />
-                        </Section>
-
                         <Section>
                             <div className="flex mb-4 contentHolder">
                                 <div className="w-1/4 filterSection">
