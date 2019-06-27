@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import systemConfig from "../../config/system";
-import {Fab, Paper} from "@material-ui/core";
+import {Fab} from "@material-ui/core";
 import {withStyles} from '@material-ui/core';
 import classNames from 'classnames';
 import {Link} from 'react-router-dom';
@@ -23,7 +23,7 @@ class ListProduct extends Component {
                       <span className={classes.wasBlock}>SALE</span>
                   </div>}
 
-                  <img className="w-full" src={systemConfig.imageBaseUrl + product.thumbnail} alt="Product Image"/>
+                  <img className="w-full" src={systemConfig.imageBaseUrl + product.thumbnail} alt="Product"/>
 
                   <div className="productTextDiv">
 

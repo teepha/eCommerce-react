@@ -25,7 +25,6 @@ import {
 } from '@material-ui/core';
 import withWidth from '@material-ui/core/withWidth';
 import {withRouter} from 'react-router-dom';
-import _ from 'lodash';
 import {bindActionCreators} from 'redux';
 import connect from 'react-redux/es/connect/connect';
 import AddIcon from '@material-ui/icons/Add';
@@ -80,10 +79,10 @@ class Product extends Component {
                                         className="w-full sm:w-1/2 md:w-1/2 lg:w-1/2 xl:w-1/2 flex justify-center align-middle pt-10">
                                         <Carousel showArrows={true} showIndicators={false} showStatus={false}>
                                             <div className={classes.carouselImageContainer}>
-                                                <img src={`${systemConfig.imageBaseUrl}${product.image}`}/>
+                                                <img src={`${systemConfig.imageBaseUrl}${product.image}`} alt="Product"/>
                                             </div>
                                             <div className={classes.carouselImageContainer}>
-                                                <img src={`${systemConfig.imageBaseUrl}${product.image_2}`}/>
+                                                <img src={`${systemConfig.imageBaseUrl}${product.image_2}`} alt="Product"/>
                                             </div>
                                         </Carousel>
                                     </div>

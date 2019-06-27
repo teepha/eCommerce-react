@@ -42,7 +42,7 @@ class AuthDialog extends Component {
 
     render() {
         const {classes, register} = this.props;
-        const loadingNext = false;
+
 
         return (
             <div>

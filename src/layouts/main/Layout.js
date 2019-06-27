@@ -38,7 +38,7 @@ const dashboardRoutes = [];
 class Layout extends React.Component {
 
     render() {
-        const {children, products } = this.props;
+        const {children } = this.props;
 
         return (<AppContext.Consumer>
             {({routes}) => (

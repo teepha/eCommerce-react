@@ -34,7 +34,7 @@ class Cart extends Component {
                     <div className="flex mb-4">
                         <div className="w-2/12">
                             <img className="w-full" src={systemConfig.imageBaseUrl + 'arc-d-triomphe-thumbnail.gif'}
-                                    alt="Product Image"/>
+                                    alt="Product"/>
                         </div>
                         <div className="w-4/12 pl-6 cart-item">
                             <div className="w-full">
