@@ -16,12 +16,11 @@ class productsService extends EventEmitter {
     };
 
 
-    getAllProducts = ({page, limit, description_length }) => {
+    getAllProducts = ({page, description_length }) => {
         return new Promise((resolve, reject) => {
             axios.get(systemConfig.serverBaseUrl + '/products', {
                 params: {
                     page,
-                    limit,
                     description_length
                 }
             }).then(response => {

@@ -10,7 +10,8 @@
  * - Implement pagination for products
  *
  */
-import React, {Component} from 'react'
+import React, {Component} from 'react';
+import ReactPaginate from 'react-paginate';
 import {
     withStyles,
     Paper,
@@ -38,20 +39,27 @@ import './styles.css';
 
 class Home extends Component {
 
-    componentWillMount() {
+    componentDidMount() {
         this.props.getAllProducts({
             page: 1,
-            limit: 9,
             description_length: 120
         });
     }
 
+    handlePageClick = data => {
+        let selected = data.selected;
+        this.props.getAllProducts({
+            page: 1 + selected,
+            description_length: 120
+        });
+    };
 
 
     render() {
-        const {classes, products } = this.props;
+        const {classes, products, count } = this.props;
 
         let currentProducts =  products;
+
 
         return (
             <div className={classes.root}>
@@ -230,6 +238,20 @@ class Home extends Component {
                                         </div>
                                     </Paper>
                                 </div>
+
+                                <ReactPaginate
+                                    previousLabel={'<'}
+                                    nextLabel={'>'}
+                                    breakLabel={'...'}
+                                    breakClassName={'break-me'}
+                                    pageCount={Math.ceil(count / 20)}
+                                    marginPagesDisplayed={2}
+                                    pageRangeDisplayed={5}
+                                    onPageChange={this.handlePageClick}
+                                    containerClassName={'pagination'}
+                                    subContainerClassName={'pages pagination'}
+                                    activeClassName={'active'}
+                                />
                                 <div className="w-3/4 flex flex-wrap ml-6 productsSection">
                                     {currentProducts.map((product, index) => (
                                         <div key={index} className="w-full sm:w-1/2 md:w-1/2 lg:w-1/2 xl:w-1/3 mb-4">
@@ -260,6 +282,7 @@ function mapDispatchToProps(dispatch) {
 function mapStateToProps({products, categories, departments}) {
     return {
         products: products.all.data.rows,
+        count: products.all.data.count
     }
 }
 
