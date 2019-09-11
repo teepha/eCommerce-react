@@ -31,14 +31,13 @@ class productsService extends EventEmitter {
         });
     };
 
-    searchProducts = ({ query_string, all_words, page, limit, description_length }) => {
+    searchProducts = ({ query_string, all_words, page, description_length }) => {
         return new Promise((resolve, reject) => {
             axios.get(systemConfig.serverBaseUrl + '/products/search', {
                 params: {
                     query_string,
                     all_words,
                     page,
-                    limit,
                     description_length
                 }
             }).then(response => {
