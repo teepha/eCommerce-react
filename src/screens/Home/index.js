@@ -19,7 +19,8 @@ import {
   Checkbox,
   Button,
   Fab,
-  TextField
+  TextField,
+  Link
 } from "@material-ui/core";
 import { Slider } from "material-ui-slider";
 import withWidth from "@material-ui/core/withWidth";
@@ -29,6 +30,7 @@ import connect from "react-redux/es/connect/connect";
 import FiberManualRecord from "@material-ui/icons/FiberManualRecord";
 import Close from "@material-ui/icons/Close";
 import * as productActions from "../../store/actions/products";
+import * as categoryActions from "../../store/actions/categories";
 import styles from "./styles";
 import { Container, Section } from "../../components/Layout";
 import ListProduct from "../../components/ListProduct";
@@ -40,7 +42,8 @@ class Home extends Component {
   state = {
     search: "",
     currentProducts: [],
-    productCount: 0
+    productCount: 0,
+    currentCategories: []
   };
 
   componentDidMount() {
@@ -48,6 +51,7 @@ class Home extends Component {
       page: 1,
       description_length: 120
     });
+    this.props.getAllCategories();
   }
 
   componentDidUpdate(prevProps, prevState) {
@@ -56,6 +60,16 @@ class Home extends Component {
         currentProducts: this.props.products,
         productCount: this.props.count
       });
+    } else if (prevProps.categories !== this.props.categories) {
+      this.setState({
+        currentCategories: this.props.categories
+      });
+    } else if (
+      prevProps.departmentCategories !== this.props.departmentCategories
+    ) {
+      this.setState({
+        currentCategories: this.props.departmentCategories
+      });
     } else if (
       this.props.searchResults.length &&
       prevProps.searchResults !== this.props.searchResults
@@ -63,6 +77,14 @@ class Home extends Component {
       this.setState({
         currentProducts: this.props.searchResults,
         productCount: this.props.searchCount
+      });
+    } else if (
+      this.props.categoryProductsResult.length &&
+      prevProps.categoryProductsResult !== this.props.categoryProductsResult
+    ) {
+      this.setState({
+        currentProducts: this.props.categoryProductsResult,
+        productCount: this.props.categoryProductsCount
       });
     }
   }
@@ -75,6 +97,11 @@ class Home extends Component {
         all_words: "on",
         page: 1 + selected,
         description_length: 120
+      });
+    } else if (this.props.categoryProductsCount > 20) {
+      this.props.getProductsInCategory({
+        category_id: this.props.categoryId,
+        page: 1 + selected
       });
     } else {
       this.props.getAllProducts({
@@ -111,10 +138,20 @@ class Home extends Component {
     });
   };
 
+  handleToggleCategories = () => {
+    this.props.getAllCategories();
+  };
+
+  handleCategoryClick = e => {
+    e.preventDefault();
+    const category_id = parseInt(e.target.id);
+    this.props.getProductsInCategory({ category_id, page: 1 });
+  };
+
   render() {
     const { classes } = this.props;
 
-    const { currentProducts, productCount } = this.state;
+    const { currentProducts, productCount, currentCategories } = this.state;
 
     return (
       <div className={classes.root}>
@@ -131,12 +168,21 @@ class Home extends Component {
                     </div>
                     <div className={classes.filterItems}>
                       <div className="py-1">
-                        <span className={classes.isGrey}>Category: </span>
-                        <span>Regional</span>
+                        <Link onClick={this.handleToggleCategories}>
+                          Categories
+                        </Link>
                       </div>
                       <div className="py-1 pb-2">
-                        <span className={classes.isGrey}>Department: </span>
-                        <span>French</span>
+                        {currentCategories.map((category, index) => (
+                          <div key={index} className={classes.isGrey}>
+                            <Link
+                              id={category.category_id}
+                              onClick={this.handleCategoryClick}
+                            >
+                              {category.name}
+                            </Link>
+                          </div>
+                        ))}
                       </div>
                     </div>
                   </div>
@@ -345,29 +391,35 @@ class Home extends Component {
                   </div>
                 </Paper>
               </div>
+              <div className="products__contents">
+                {currentProducts.length < 20 && productCount < 20 ? (
+                  ""
+                ) : (
+                  <ReactPaginate
+                    previousLabel={"< Previous"}
+                    nextLabel={"Next >"}
+                    breakLabel={"..."}
+                    breakClassName={"break-me"}
+                    pageCount={Math.ceil(productCount / 20)}
+                    marginPagesDisplayed={2}
+                    pageRangeDisplayed={5}
+                    onPageChange={this.handlePageClick}
+                    containerClassName={"pagination"}
+                    subContainerClassName={"pages pagination"}
+                    activeClassName={"active"}
+                  />
+                )}
 
-              <ReactPaginate
-                previousLabel={"<"}
-                nextLabel={">"}
-                breakLabel={"..."}
-                breakClassName={"break-me"}
-                pageCount={Math.ceil(productCount / 20)}
-                marginPagesDisplayed={2}
-                pageRangeDisplayed={5}
-                onPageChange={this.handlePageClick}
-                containerClassName={"pagination"}
-                subContainerClassName={"pages pagination"}
-                activeClassName={"active"}
-              />
-              <div className="w-3/4 flex flex-wrap ml-6 productsSection">
-                {currentProducts.map((product, index) => (
-                  <div
-                    key={index}
-                    className="w-full sm:w-1/2 md:w-1/2 lg:w-1/2 xl:w-1/3 mb-4"
-                  >
-                    <ListProduct product={product} />
-                  </div>
-                ))}
+                <div className="w-3/4 flex flex-wrap ml-6 productsSection">
+                  {currentProducts.map((product, index) => (
+                    <div
+                      key={index}
+                      className="w-full sm:w-1/2 md:w-1/2 lg:w-1/2 xl:w-1/3 mb-4"
+                    >
+                      <ListProduct product={product} />
+                    </div>
+                  ))}
+                </div>
               </div>
             </div>
           </Section>
@@ -387,7 +439,9 @@ function mapDispatchToProps(dispatch) {
   return bindActionCreators(
     {
       getAllProducts: productActions.getAllProducts,
-      searchProducts: productActions.searchProducts
+      searchProducts: productActions.searchProducts,
+      getAllCategories: categoryActions.getAllCategories,
+      getProductsInCategory: productActions.getProductsInCategory
     },
     dispatch
   );
@@ -398,7 +452,12 @@ function mapStateToProps({ products, categories, departments }) {
     products: products.all.data.rows,
     count: products.all.data.count,
     searchResults: products.search.data.rows,
-    searchCount: products.search.data.count
+    searchCount: products.search.data.count,
+    categories: categories.allCategories.data.rows,
+    departmentCategories: categories.departmentCategories.data,
+    categoryProductsResult: products.categoryProducts.data.rows,
+    categoryProductsCount: products.categoryProducts.data.count,
+    categoryId: products.categoryProducts.data.category_id
   };
 }
 

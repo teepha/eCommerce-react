@@ -1,4 +1,6 @@
-
+.py-1 {
+    cursor: pointer;
+}
 @media (max-width: 768px){
   .contentHolder {
       width: 100%;
