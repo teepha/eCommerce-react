@@ -52,6 +52,7 @@ class NavBar extends React.Component {
   handleToggleDepartment = e => {
     e.preventDefault();
     const departmentId = parseInt(e.target.id);
+    this.props.getProductsInDepartment({ department_id: departmentId, page: 1})
     this.props.getDepartmentCategories({ department_id: departmentId });
   };
 
@@ -184,6 +185,7 @@ function mapDispatchToProps(dispatch) {
       showCart: alertActions.showCart,
       getAllDepartments: departmentActions.getAllDepartments,
       getDepartmentCategories: categoriesActions.getDepartmentCategories,
+      getProductsInDepartment: productActions.getProductsInDepartment,
       getProductsInCategory: productActions.getProductsInCategory
     },
     dispatch
@@ -194,6 +196,7 @@ const mapStateToProps = ({ products, departments, categories }) => {
   return {
     allDepartments: departments.all.data,
     departmentCategories: categories.departmentCategories.data,
+    departmentProducts: products.departmentProducts.data.rows,
     categoryProducts: products.categoryProducts.data.rows
   };
 };
