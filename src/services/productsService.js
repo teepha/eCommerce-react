@@ -63,9 +63,13 @@ class productsService extends EventEmitter {
         });
     };
 
-    getProductsInDepartment = ({ department_id }) => {
+    getProductsInDepartment = ({ department_id, page }) => {
         return new Promise((resolve, reject) => {
-            axios.get(systemConfig.serverBaseUrl + `/products/inDepartment/${department_id}`).then(response => {
+            axios.get(systemConfig.serverBaseUrl + `/products/inDepartment/${department_id}`, {
+                params: {
+                    page
+                }
+            }).then(response => {
                 resolve(response.data)
             }).catch((error) => {
                 reject(error.response);

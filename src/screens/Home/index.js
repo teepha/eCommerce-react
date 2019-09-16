@@ -3,7 +3,7 @@
  * if a user select a department and category in the navigation menu
  * - Filter should display Department and category dynamically when a user select a department and category
  *  on the navigation bar
- * - Filter should dynamically dislay attribute values like Size and Color from backend
+ * - Filter should dynamically display attribute values like Size and Color from backend
  * - Price on the Price slider should change as the user slide through in the Filter
  * - Implement functionalities for search in the Nav bar and filter bar
  * - Implement funtionality for reset on filter component
@@ -55,52 +55,87 @@ class Home extends Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
-    if (prevProps.products !== this.props.products) {
+    const {
+      products,
+      count,
+      categories,
+      departmentCategories,
+      searchResults,
+      searchCount,
+      departmentProducts,
+      departmentProductsCount,
+      categoryProductsResult,
+      categoryProductsCount
+    } = this.props;
+    if (prevProps.products !== products) {
       this.setState({
-        currentProducts: this.props.products,
-        productCount: this.props.count
+        currentProducts: products,
+        productCount: count
       });
-    } else if (prevProps.categories !== this.props.categories) {
+    } else if (prevProps.categories !== categories) {
       this.setState({
-        currentCategories: this.props.categories
+        currentCategories: categories
+      });
+    } else if (prevProps.departmentCategories !== departmentCategories) {
+      this.setState({
+        currentCategories: departmentCategories
       });
     } else if (
-      prevProps.departmentCategories !== this.props.departmentCategories
+      searchResults.length &&
+      prevProps.searchResults !== searchResults
     ) {
       this.setState({
-        currentCategories: this.props.departmentCategories
+        currentProducts: searchResults,
+        productCount: searchCount
       });
     } else if (
-      this.props.searchResults.length &&
-      prevProps.searchResults !== this.props.searchResults
+      departmentProducts.length &&
+      prevProps.departmentProducts !== departmentProducts
     ) {
       this.setState({
-        currentProducts: this.props.searchResults,
-        productCount: this.props.searchCount
+        currentProducts: departmentProducts,
+        productCount: departmentProductsCount
       });
     } else if (
-      this.props.categoryProductsResult.length &&
-      prevProps.categoryProductsResult !== this.props.categoryProductsResult
+      categoryProductsResult.length &&
+      prevProps.categoryProductsResult !== categoryProductsResult
     ) {
       this.setState({
-        currentProducts: this.props.categoryProductsResult,
-        productCount: this.props.categoryProductsCount
+        currentProducts: categoryProductsResult,
+        productCount: categoryProductsCount
       });
     }
   }
 
   handlePageClick = data => {
     let selected = data.selected;
-    if (this.props.searchResults.length) {
+    const contentPerPage = 20;
+    const {
+      searchCount,
+      departmentProductsCount,
+      departmentProducts,
+      departmentId,
+      categoryId,
+      categoryProductsCount,
+      categoryProductsResult
+    } = this.props;
+    if (searchCount > contentPerPage) {
       this.props.searchProducts({
         query_string: this.state.search,
         all_words: "on",
         page: 1 + selected,
         description_length: 120
       });
-    } else if (this.props.categoryProductsCount > 20) {
+    } else if (departmentProducts && departmentProductsCount > contentPerPage) {
+      console.log(">>>>>paginate dept", departmentProductsCount);
+      this.props.getProductsInDepartment({
+        department_id: departmentId,
+        page: 1 + selected
+      });
+    } else if (categoryProductsResult && categoryProductsCount > contentPerPage) {
+      console.log(">>>>>paginate cat", categoryProductsCount);
       this.props.getProductsInCategory({
-        category_id: this.props.categoryId,
+        category_id: categoryId,
         page: 1 + selected
       });
     } else {
@@ -150,7 +185,7 @@ class Home extends Component {
 
   render() {
     const { classes } = this.props;
-
+      console.log("this props inside page click", this.props)
     const { currentProducts, productCount, currentCategories } = this.state;
 
     return (
@@ -441,6 +476,7 @@ function mapDispatchToProps(dispatch) {
       getAllProducts: productActions.getAllProducts,
       searchProducts: productActions.searchProducts,
       getAllCategories: categoryActions.getAllCategories,
+      getProductsInDepartment: productActions.getProductsInDepartment,
       getProductsInCategory: productActions.getProductsInCategory
     },
     dispatch
@@ -455,6 +491,9 @@ function mapStateToProps({ products, categories, departments }) {
     searchCount: products.search.data.count,
     categories: categories.allCategories.data.rows,
     departmentCategories: categories.departmentCategories.data,
+    departmentProducts: products.departmentProducts.data.rows,
+    departmentProductsCount: products.departmentProducts.data.count,
+    departmentId: products.departmentProducts.data.department_id,
     categoryProductsResult: products.categoryProducts.data.rows,
     categoryProductsCount: products.categoryProducts.data.count,
     categoryId: products.categoryProducts.data.category_id
