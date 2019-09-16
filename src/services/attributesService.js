@@ -35,6 +35,19 @@ class attributesService extends EventEmitter {
       return allAttributes.map((a, i) => ({ [attributeIds[i]]: a.data }));
     });
   };
+
+  getAttributesInProduct = ({ product_id }) => {
+    return new Promise((resolve, reject) => {
+      axios
+        .get(systemConfig.serverBaseUrl + `/attributes/inProduct/${product_id}`)
+        .then(response => {
+          resolve(response.data);
+        })
+        .catch(error => {
+          reject(error.response);
+        });
+    });
+  };
 }
 
 const instance = new attributesService();

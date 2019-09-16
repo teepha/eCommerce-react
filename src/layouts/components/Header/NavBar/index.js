@@ -1,4 +1,5 @@
 import React from "react";
+import { withRouter } from "react-router-dom";
 import PropTypes from "prop-types";
 import {
   withStyles,
@@ -50,15 +51,24 @@ class NavBar extends React.Component {
   }
 
   handleToggleDepartment = e => {
+    console.log("dept toggle", this.props);
     e.preventDefault();
     const departmentId = parseInt(e.target.id);
-    this.props.getProductsInDepartment({ department_id: departmentId, page: 1})
-    this.props.getDepartmentCategories({ department_id: departmentId });
+    if (this.props.location.pathname === "/") {
+      this.props.history.push(`/department/${departmentId}`);
+      this.props.getProductsInDepartment({
+        department_id: departmentId,
+        page: 1
+      });
+      this.props.getDepartmentCategories({ department_id: departmentId });
+    } else {
+      this.props.history.push("/");
+    }
   };
 
   render() {
     const { classes, brand, allDepartments } = this.props;
-
+    console.log(">>>>Navbar", this.props);
     const brandComponent = (
       <Link to={"/"} className={classes.brand}>
         {brand}
@@ -202,8 +212,10 @@ const mapStateToProps = ({ products, departments, categories }) => {
 };
 
 export default withStyles(styles, { withTheme: true })(
-  connect(
-    mapStateToProps,
-    mapDispatchToProps
-  )(NavBar)
+  withRouter(
+    connect(
+      mapStateToProps,
+      mapDispatchToProps
+    )(NavBar)
+  )
 );
