@@ -6,7 +6,7 @@ const initialState = {
     error: false
 };
 
-const productReviewsReducer = function (state = initialState, action) {
+const productDetailsReducer = function (state = initialState, action) {
     switch (action.type) {
         case Actions.GET_PRODUCT_DETAILS: {
             return {
@@ -36,4 +36,4 @@ const productReviewsReducer = function (state = initialState, action) {
     }
 };
 
-export default productReviewsReducer;
+export default productDetailsReducer;

@@ -51,18 +51,21 @@ class NavBar extends React.Component {
   }
 
   handleToggleDepartment = e => {
-    console.log("dept toggle", this.props);
     e.preventDefault();
     const departmentId = parseInt(e.target.id);
-    if (this.props.location.pathname === "/") {
+
+    if (
+      this.props.location.pathname !== "/" &&
+      this.props.location.pathname !== `/department/${departmentId}`
+    ) {
+      this.props.history.push("/");
+    } else {
       this.props.history.push(`/department/${departmentId}`);
+      this.props.getDepartmentCategories({ department_id: departmentId });
       this.props.getProductsInDepartment({
         department_id: departmentId,
         page: 1
       });
-      this.props.getDepartmentCategories({ department_id: departmentId });
-    } else {
-      this.props.history.push("/");
     }
   };
 

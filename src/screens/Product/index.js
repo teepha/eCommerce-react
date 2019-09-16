@@ -46,7 +46,7 @@ import Review from "../../components/Review";
 import ReviewForm from "./ReviewForm";
 
 class Product extends Component {
-  componentWillMount() {
+  componentDidMount() {
     const {
       match: { params }
     } = this.props;
@@ -60,6 +60,9 @@ class Product extends Component {
     this.props.getProductLocations({
       product_id: params.id
     });
+    this.props.getProductReviews({
+      product_id: params.id
+    });
     this.props.getAttributesInProduct({
       product_id: params.id
     });
@@ -69,6 +72,7 @@ class Product extends Component {
     const {
       classes,
       product,
+      reviews,
       loading,
       locations,
       locationsLoading,
@@ -83,6 +87,19 @@ class Product extends Component {
     );
     const sizeAttributes = productAttributes.filter(
       attributes => attributes.attribute_name === "Size"
+    );
+
+    const reviewRatings = reviews.filter(
+      review => review.rating >= 1 && review.rating <= 5
+    );
+
+    const initialValue = 0;
+    const ratingsSum = reviewRatings.reduce(
+      (accumulator, review) => accumulator + review.rating,
+      initialValue
+    );
+    const ratingsAverage = Number(
+      (ratingsSum / reviewRatings.length).toPrecision(2)
     );
 
     return (
@@ -126,7 +143,7 @@ class Product extends Component {
                     </div>
                     <div className="w-full h-8 mt-2">
                       <StarRatings
-                        rating={3}
+                        rating={reviewRatings.length && ratingsAverage}
                         starRatedColor="#ffc94f"
                         starEmptyColor="#eeeeee"
                         starHoverColor="#ffc94f"
@@ -253,25 +270,30 @@ class Product extends Component {
               </Section>
               <div>
                 <Hidden mdDown>
-                  <Section>
-                    <div className="flex flex-wrap px-32">
-                      <div className="w-full flex">
-                        <span className={classes.reviewTitleText}>
-                          Product Reviews
-                        </span>
+                  {reviewRatings.length ? (
+                    <Section>
+                      <div className="flex flex-wrap px-32">
+                        <div className="w-full flex">
+                          <span className={classes.reviewTitleText}>
+                            Product Reviews
+                          </span>
+                        </div>
+                        {reviewRatings.length &&
+                          reviewRatings
+                            .slice(0, 5)
+                            .map((review, index) => (
+                              <Review
+                                rating={review.rating}
+                                key={index}
+                                name={review.name}
+                                review={review.review}
+                              />
+                            ))}
                       </div>
-                      <Review
-                        rating={5}
-                        name="Peter Test"
-                        review="Test Review 1"
-                      />
-                      <Review
-                        rating={3}
-                        name="Celestine Test"
-                        review="Test Review 2"
-                      />
-                    </div>
-                  </Section>
+                    </Section>
+                  ) : (
+                    ""
+                  )}
                 </Hidden>
                 <ReviewForm productId={params.id} />
               </div>
@@ -301,6 +323,7 @@ function mapDispatchToProps(dispatch) {
       getSingleProduct: productActions.getSingleProduct,
       getProductDetails: productActions.getProductDetails,
       getProductLocations: productActions.getProductLocations,
+      getProductReviews: productActions.getProductReviews,
       getAttributesInProduct: attributeActions.getAttributesInProduct,
       showAuth: alertActions.showAuth
     },
@@ -312,6 +335,7 @@ function mapStateToProps({ product, attributes, cart, auth }) {
   return {
     product: product.item.data,
     locations: product.locations.data,
+    reviews: product.reviews.data,
     locationsLoading: product.locations.isLoading,
     loading: product.item.isLoading,
     productAttributes: attributes.productAttributes.data
