@@ -123,7 +123,6 @@ class Home extends Component {
   }
 
   handlePageClick = data => {
-    console.log("got hereee");
     let selected = data.selected;
     const contentPerPage = 20;
     const {
@@ -133,11 +132,12 @@ class Home extends Component {
       departmentId,
       categoryId,
       categoryProductsCount,
-      categoryProductsResult
+      categoryProductsResult,
+      searchValue
     } = this.props;
-    if (searchCount > contentPerPage) {
+    if (searchCount > contentPerPage && searchValue) {
       this.props.searchProducts({
-        query_string: this.state.search,
+        query_string: this.state.search || searchValue,
         all_words: "on",
         page: 1 + selected,
         description_length: 120
@@ -466,6 +466,7 @@ function mapStateToProps({ products, categories, attributes, departments }) {
     count: products.all.data.count,
     searchResults: products.search.data.rows,
     searchCount: products.search.data.count,
+    searchValue: products.search.data.query_string,
     categories: categories.allCategories.data.rows,
     departmentCategories: categories.departmentCategories.data,
     departmentProducts: products.departmentProducts.data.rows,

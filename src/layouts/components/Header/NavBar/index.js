@@ -69,9 +69,18 @@ class NavBar extends React.Component {
     }
   };
 
+  handleInputChange = e => {
+    const search = e.target.value.trim().toLowerCase();
+    this.props.searchProducts({
+      query_string: search,
+      all_words: "on",
+      page: 1,
+      description_length: 120
+    });
+  };
+
   render() {
     const { classes, brand, allDepartments } = this.props;
-    console.log(">>>>Navbar", this.props);
     const brandComponent = (
       <Link to={"/"} className={classes.brand}>
         {brand}
@@ -114,6 +123,7 @@ class NavBar extends React.Component {
                     root: classes.inputRoot,
                     input: classes.inputInput
                   }}
+                  onChange={this.handleInputChange}
                 />
               </div>
             </Hidden>
@@ -196,6 +206,7 @@ function mapDispatchToProps(dispatch) {
   return bindActionCreators(
     {
       showCart: alertActions.showCart,
+      searchProducts: productActions.searchProducts,
       getAllDepartments: departmentActions.getAllDepartments,
       getDepartmentCategories: categoriesActions.getDepartmentCategories,
       getProductsInDepartment: productActions.getProductsInDepartment,
@@ -210,7 +221,9 @@ const mapStateToProps = ({ products, departments, categories }) => {
     allDepartments: departments.all.data,
     departmentCategories: categories.departmentCategories.data,
     departmentProducts: products.departmentProducts.data.rows,
-    categoryProducts: products.categoryProducts.data.rows
+    categoryProducts: products.categoryProducts.data.rows,
+    searchResults: products.search.data.rows,
+    searchCount: products.search.data.count
   };
 };
 

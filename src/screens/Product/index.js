@@ -46,6 +46,10 @@ import Review from "../../components/Review";
 import ReviewForm from "./ReviewForm";
 
 class Product extends Component {
+  state = {
+    quanityValue: 1
+  };
+
   componentDidMount() {
     const {
       match: { params }
@@ -67,6 +71,22 @@ class Product extends Component {
       product_id: params.id
     });
   }
+
+  handleSubtractButtonClick = () => {
+    if (this.state.quanityValue > 1) {
+      this.setState({
+        quanityValue: this.state.quanityValue - 1
+      });
+    }
+  };
+
+  handleAddButtonClick = () => {
+    if (this.state.quanityValue >= 1) {
+      this.setState({
+        quanityValue: this.state.quanityValue + 1
+      });
+    }
+  };
 
   render() {
     const {
@@ -92,7 +112,6 @@ class Product extends Component {
     const reviewRatings = reviews.filter(
       review => review.rating >= 1 && review.rating <= 5
     );
-
     const initialValue = 0;
     const ratingsSum = reviewRatings.reduce(
       (accumulator, review) => accumulator + review.rating,
@@ -231,7 +250,9 @@ class Product extends Component {
                         aria-label="Subtract"
                         className={classes.addRemoveIcon}
                       >
-                        <SubtractIcon />
+                        <SubtractIcon
+                          onClick={this.handleSubtractButtonClick}
+                        />
                       </Fab>
 
                       <div className="shadow appearance-none border rounded w-16 text-gray-700 rounded-full text-center mx-2">
@@ -239,7 +260,7 @@ class Product extends Component {
                           className={classes.addRemoveText}
                           name="product-details-quantity"
                         >
-                          2
+                          {this.state.quanityValue}
                         </span>
                       </div>
 
@@ -248,7 +269,7 @@ class Product extends Component {
                         aria-label="Add"
                         className={`increase-quantity ${classes.addRemoveIcon}`}
                       >
-                        <AddIcon />
+                        <AddIcon onClick={this.handleAddButtonClick} />
                       </Fab>
                     </div>
                     <div className="w-full my-8 flex flex-row">
