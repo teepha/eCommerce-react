@@ -40,6 +40,7 @@ import systemConfig from "../../config/system";
 import * as productActions from "../../store/actions/product";
 import * as alertActions from "../../store/actions/alerts";
 import * as attributeActions from "../../store/actions/attributes";
+import * as shoppingCartActions from "../../store/actions/shoppingCart";
 import styles from "./styles";
 import { Container, Section } from "../../components/Layout";
 import Review from "../../components/Review";
@@ -47,14 +48,16 @@ import ReviewForm from "./ReviewForm";
 
 class Product extends Component {
   state = {
-    quanityValue: 1
+    quanityValue: 1,
+    sizeValue: "",
+    colorValue: ""
   };
 
   componentDidMount() {
     const {
       match: { params }
     } = this.props;
-    // this.props.showAuth()
+    // this.props.hideAuth();
     this.props.getSingleProduct({
       product_id: params.id
     });
@@ -86,6 +89,30 @@ class Product extends Component {
         quanityValue: this.state.quanityValue + 1
       });
     }
+  };
+
+  handleSizeClick = e => {
+    let isChecked = e.target.checked;
+    if (isChecked) {
+      this.setState({ sizeValue: e.target.value });
+    }
+  };
+
+  handleColorClick = e => {
+    this.setState({ [e.target.name]: e.target.value });
+  };
+
+  handleAddToCart = () => {
+    const {
+      match: { params }
+    } = this.props;
+    const { cart_id } = localStorage;
+    const { sizeValue, colorValue } = this.state;
+    this.props.addItemToCart({
+      cart_id,
+      product_id: params.id,
+      attributes: `${sizeValue || colorValue ? [sizeValue, colorValue] : ""}`
+    });
   };
 
   render() {
@@ -212,7 +239,8 @@ class Product extends Component {
                             key={index}
                             icon={<FiberManualRecord />}
                             value={attribute.attribute_value}
-                            name="radio-button-demo"
+                            onChange={this.handleColorClick}
+                            name="colorValue"
                             aria-label="blue"
                             className="product-details-color"
                           />
@@ -240,6 +268,7 @@ class Product extends Component {
                             className="product-details-size"
                             key={index}
                             value={attribute.attribute_value}
+                            onChange={this.handleSizeClick}
                           />
                         ))}
                       </div>
@@ -279,6 +308,7 @@ class Product extends Component {
                           size="large"
                           id="btnCart"
                           style={{ borderRadius: 60, height: 60, width: 220 }}
+                          onClick={this.handleAddToCart}
                         >
                           <span className={classes.submitButtonText}>
                             Add to Cart
@@ -346,20 +376,32 @@ function mapDispatchToProps(dispatch) {
       getProductLocations: productActions.getProductLocations,
       getProductReviews: productActions.getProductReviews,
       getAttributesInProduct: attributeActions.getAttributesInProduct,
-      showAuth: alertActions.showAuth
+      showAuth: alertActions.showAuth,
+      // hideAuth: alertActions.hideAuth,
+      addItemToCart: shoppingCartActions.addItemToCart
     },
     dispatch
   );
 }
 
-function mapStateToProps({ product, attributes, cart, auth }) {
+function mapStateToProps({
+  product,
+  attributes,
+  alerts,
+  cart,
+  auth,
+  shoppingCart
+}) {
   return {
+    auth: alerts.auth.register,
     product: product.item.data,
     locations: product.locations.data,
     reviews: product.reviews.data,
     locationsLoading: product.locations.isLoading,
     loading: product.item.isLoading,
-    productAttributes: attributes.productAttributes.data
+    productAttributes: attributes.productAttributes.data,
+    newCartItem: shoppingCart.addCartItem.data,
+    shoppingCartItems: shoppingCart.getCart.data
   };
 }
 

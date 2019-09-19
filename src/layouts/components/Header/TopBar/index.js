@@ -25,7 +25,7 @@ class TopBar extends React.Component {
     render() {
 
         const {
-            classes,
+            classes, shoppingCartItems, itemsTotalAmount
         } = this.props;
 
         return (
@@ -82,13 +82,13 @@ class TopBar extends React.Component {
                         }}>
                             <Badge
                                 classes={{badge: classes.badge}}
-                                badgeContent={1}
+                                badgeContent={shoppingCartItems && shoppingCartItems.length}
                                 color="primary"
                             >
                                 <img alt="Shopping Cart Icon" src="/assets/icons/shopping-cart-black.svg"/>
                             </Badge>
                         </div>
-                        <div className={classes.yourBag} style={{color: 'black'}}>Your Bag: $<span id="menuCartTotalPrice">14.99</span></div>
+                        <div className={classes.yourBag} style={{color: 'black'}}>Your Bag: $<span id="menuCartTotalPrice">{itemsTotalAmount}</span></div>
                     </div>
                 </Toolbar>
             </AppBar>
@@ -107,5 +107,13 @@ function mapDispatchToProps(dispatch) {
     }, dispatch);
 }
 
+const mapStateToProps = ({
+    shoppingCart
+}) => {
+    return {
+        shoppingCartItems: shoppingCart.getCart.data,
+        itemsTotalAmount: shoppingCart.totalAmount.data.total_amount
+    };
+};
 
-export default withStyles(styles, {withTheme: true})(connect(null, mapDispatchToProps)(TopBar));
+export default withStyles(styles, { withTheme: true })(connect(mapStateToProps, mapDispatchToProps)(TopBar));
