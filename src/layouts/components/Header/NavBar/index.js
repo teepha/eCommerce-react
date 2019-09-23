@@ -93,6 +93,7 @@ class NavBar extends React.Component {
   };
 
   render() {
+    console.log("inside the NAVBAR", this.props, "the state", this.state);
     const { classes, brand, allDepartments, shoppingCartItems } = this.props;
     const brandComponent = (
       <Link to={"/"} className={classes.brand}>
@@ -154,7 +155,7 @@ class NavBar extends React.Component {
                     badge: classes.badge
                   }}
                   id="menuCartQuantity"
-                  badgeContent={shoppingCartItems && shoppingCartItems.length}
+                  badgeContent={shoppingCartItems.length}
                   color="primary"
                 >
                   <img
@@ -246,8 +247,8 @@ const mapStateToProps = ({
     categoryProducts: products.categoryProducts.data.rows,
     searchResults: products.search.data.rows,
     searchCount: products.search.data.count,
-    shoppingCartItems: shoppingCart.getCart.data,
-    itemsTotalAmount: shoppingCart.totalAmount.data.total_amount
+    shoppingCartItems: shoppingCart.cart.data,
+    itemsTotalAmount: shoppingCart.cart.totalAmount.total_amount
   };
 };
 

@@ -123,7 +123,7 @@ class Cart extends Component {
 
 function mapStateToProps({ shoppingCart }) {
   return {
-    shoppingCartItems: shoppingCart.getCart.data
+    shoppingCartItems: shoppingCart.cart.data
   };
 }
 

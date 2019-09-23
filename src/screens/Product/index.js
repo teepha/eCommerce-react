@@ -113,9 +113,11 @@ class Product extends Component {
       product_id: params.id,
       attributes: `${sizeValue || colorValue ? [sizeValue, colorValue] : ""}`
     });
+    this.props.getTotalAmount({ cart_id });
   };
 
   render() {
+    console.log("inside the PRODUCT", this.props);
     const {
       classes,
       product,
@@ -378,20 +380,14 @@ function mapDispatchToProps(dispatch) {
       getAttributesInProduct: attributeActions.getAttributesInProduct,
       showAuth: alertActions.showAuth,
       // hideAuth: alertActions.hideAuth,
-      addItemToCart: shoppingCartActions.addItemToCart
+      addItemToCart: shoppingCartActions.addItemToCart,
+      getTotalAmount: shoppingCartActions.getTotalAmount
     },
     dispatch
   );
 }
 
-function mapStateToProps({
-  product,
-  attributes,
-  alerts,
-  cart,
-  auth,
-  shoppingCart
-}) {
+function mapStateToProps({ product, attributes, alerts, cart, auth }) {
   return {
     auth: alerts.auth.register,
     product: product.item.data,
@@ -399,9 +395,7 @@ function mapStateToProps({
     reviews: product.reviews.data,
     locationsLoading: product.locations.isLoading,
     loading: product.item.isLoading,
-    productAttributes: attributes.productAttributes.data,
-    newCartItem: shoppingCart.addCartItem.data,
-    shoppingCartItems: shoppingCart.getCart.data
+    productAttributes: attributes.productAttributes.data
   };
 }
 

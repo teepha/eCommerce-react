@@ -111,8 +111,8 @@ const mapStateToProps = ({
     shoppingCart
 }) => {
     return {
-        shoppingCartItems: shoppingCart.getCart.data,
-        itemsTotalAmount: shoppingCart.totalAmount.data.total_amount
+        shoppingCartItems: shoppingCart.cart.data,
+        itemsTotalAmount: shoppingCart.cart.totalAmount.total_amount
     };
 };
 
