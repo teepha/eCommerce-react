@@ -31,6 +31,7 @@ import FiberManualRecord from "@material-ui/icons/FiberManualRecord";
 import Close from "@material-ui/icons/Close";
 import * as productActions from "../../store/actions/products";
 import * as categoryActions from "../../store/actions/categories";
+import * as attributeActions from "../../store/actions/attributes";
 import styles from "./styles";
 import { Container, Section } from "../../components/Layout";
 import ListProduct from "../../components/ListProduct";
@@ -38,12 +39,18 @@ import Banner from "../../components/Banner";
 import SubscribeBar from "../../components/SubscribeBar";
 import "./styles.css";
 
+const ATTRIBUTE_MAP = {
+  1: "Size",
+  2: "Color"
+};
+
 class Home extends Component {
   state = {
     search: "",
     currentProducts: [],
     productCount: 0,
-    currentCategories: []
+    currentCategories: [],
+    attributeIds: []
   };
 
   componentDidMount() {
@@ -52,6 +59,7 @@ class Home extends Component {
       description_length: 120
     });
     this.props.getAllCategories();
+    this.props.getAllAttributes();
   }
 
   componentDidUpdate(prevProps, prevState) {
@@ -65,8 +73,13 @@ class Home extends Component {
       departmentProducts,
       departmentProductsCount,
       categoryProductsResult,
-      categoryProductsCount
+      categoryProductsCount,
+      attributes
     } = this.props;
+    const mappedAttributes = attributes.map(
+      attribute => attribute.attribute_id
+    );
+
     if (prevProps.products !== products) {
       this.setState({
         currentProducts: products,
@@ -104,6 +117,8 @@ class Home extends Component {
         currentProducts: categoryProductsResult,
         productCount: categoryProductsCount
       });
+    } else if (attributes.length && prevProps.attributes !== attributes) {
+      this.props.getAttributeValues(mappedAttributes);
     }
   }
 
@@ -117,11 +132,12 @@ class Home extends Component {
       departmentId,
       categoryId,
       categoryProductsCount,
-      categoryProductsResult
+      categoryProductsResult,
+      searchValue
     } = this.props;
-    if (searchCount > contentPerPage) {
+    if (searchCount > contentPerPage && searchValue) {
       this.props.searchProducts({
-        query_string: this.state.search,
+        query_string: this.state.search || searchValue,
         all_words: "on",
         page: 1 + selected,
         description_length: 120
@@ -132,7 +148,10 @@ class Home extends Component {
         department_id: departmentId,
         page: 1 + selected
       });
-    } else if (categoryProductsResult && categoryProductsCount > contentPerPage) {
+    } else if (
+      categoryProductsResult &&
+      categoryProductsCount > contentPerPage
+    ) {
       console.log(">>>>>paginate cat", categoryProductsCount);
       this.props.getProductsInCategory({
         category_id: categoryId,
@@ -184,9 +203,16 @@ class Home extends Component {
   };
 
   render() {
-    const { classes } = this.props;
-      console.log("this props inside page click", this.props)
+    const { classes, attributes, attributeValues } = this.props;
     const { currentProducts, productCount, currentCategories } = this.state;
+    const mappedValues = {};
+    attributeValues.forEach(value => {
+      Object.entries(value).map(
+        ([key, value]) => (mappedValues[ATTRIBUTE_MAP[key]] = value)
+      );
+    });
+    const colorValues = mappedValues.Color;
+    const sizeValues = mappedValues.Size;
 
     return (
       <div className={classes.root}>
@@ -222,140 +248,89 @@ class Home extends Component {
                     </div>
                   </div>
                   <div className={classes.filterBodyContainer}>
-                    <div className={classes.colorBlock}>
-                      <div className={classes.titleContainer}>
-                        <span className={classes.controlsTitle}>Color</span>
-                      </div>
-                      <div className={classes.colorRadiosContainer}>
-                        <Radio
-                          style={{ padding: 0, color: "#6eb2fb" }}
-                          size="small"
-                          icon={<FiberManualRecord />}
-                          value="a"
-                          name="radio-button-demo"
-                          aria-label="A"
-                        />
-                        <Radio
-                          style={{ padding: 0, color: "#00d3ca" }}
-                          size="small"
-                          icon={<FiberManualRecord />}
-                          value="b"
-                          name="radio-button-demo"
-                          aria-label="B"
-                        />
-                        <Radio
-                          style={{ padding: 0, color: "#f62f5e" }}
-                          size="small"
-                          icon={<FiberManualRecord />}
-                          value="c"
-                          name="radio-button-demo"
-                          aria-label="C"
-                        />
-                        <Radio
-                          style={{ padding: 0, color: "#fe5c07" }}
-                          size="small"
-                          icon={<FiberManualRecord />}
-                          value="d"
-                          name="radio-button-demo"
-                          aria-label="D"
-                        />
-                        <Radio
-                          style={{ padding: 0, color: "#f8e71c" }}
-                          size="small"
-                          icon={<FiberManualRecord />}
-                          value="e"
-                          name="radio-button-demo"
-                          aria-label="E"
-                        />
-                        <Radio
-                          style={{ padding: 0, color: "#7ed321" }}
-                          size="small"
-                          icon={<FiberManualRecord />}
-                          value="f"
-                          name="radio-button-demo"
-                          aria-label="F"
-                        />
-                        <Radio
-                          style={{ padding: 0, color: "#9013fe" }}
-                          size="small"
-                          icon={<FiberManualRecord />}
-                          value="g"
-                          name="radio-button-demo"
-                          aria-label="G"
-                        />
-                      </div>
-                    </div>
-                    <div className={classes.sizesBlock}>
-                      <div className={classes.titleContainer}>
-                        <span className={classes.controlsTitle}>Size</span>
-                      </div>
-                      <div className={classes.sizeCheckboxes}>
-                        <Checkbox
-                          style={{ padding: 0 }}
-                          checkedIcon={
-                            <div className={classes.sizeCheckboxChecked}>
-                              XS
+                    {attributes.map((attribute, index) => {
+                      if (attribute.name === "Color") {
+                        return (
+                          <div
+                            className={classes.colorBlock}
+                            key={index}
+                            id={attribute.attribute_id}
+                          >
+                            <div className={classes.titleContainer}>
+                              <span
+                                className={classes.controlsTitle}
+                                id={attribute.attribute_id}
+                              >
+                                {attribute.name}
+                              </span>
                             </div>
-                          }
-                          icon={
-                            <div className={classes.sizeCheckboxUnchecked}>
-                              XS
+
+                            <div className={classes.colorRadiosContainer}>
+                              {colorValues &&
+                                colorValues.map((attribute, index) => (
+                                  <Radio
+                                    style={{
+                                      padding: 0,
+                                      color: `${
+                                        attribute.value === "White"
+                                          ? "#eee"
+                                          : attribute.value
+                                      }`
+                                    }}
+                                    size="small"
+                                    key={index}
+                                    icon={<FiberManualRecord />}
+                                    value={attribute.value}
+                                    name="radio-button-demo"
+                                    aria-label="A"
+                                  />
+                                ))}
                             </div>
-                          }
-                          value="XS"
-                        />
-                        <Checkbox
-                          style={{ padding: 0 }}
-                          checkedIcon={
-                            <div className={classes.sizeCheckboxChecked}>S</div>
-                          }
-                          icon={
-                            <div className={classes.sizeCheckboxUnchecked}>
-                              S
+                          </div>
+                        );
+                      } else {
+                        return (
+                          <div className={classes.sizesBlock} key={index}>
+                            <div className={classes.titleContainer}>
+                              <span
+                                className={classes.controlsTitle}
+                                id={attribute.attribute_id}
+                              >
+                                {attribute.name}
+                              </span>
                             </div>
-                          }
-                          value="checkedA"
-                        />
-                        <Checkbox
-                          style={{ padding: 0 }}
-                          checkedIcon={
-                            <div className={classes.sizeCheckboxChecked}>M</div>
-                          }
-                          icon={
-                            <div className={classes.sizeCheckboxUnchecked}>
-                              M
+
+                            <div className={classes.sizeCheckboxes}>
+                              {sizeValues &&
+                                sizeValues.map((attribute, index) => (
+                                  <Checkbox
+                                    key={index}
+                                    style={{ padding: 0 }}
+                                    checkedIcon={
+                                      <div
+                                        className={classes.sizeCheckboxChecked}
+                                      >
+                                        {attribute.value}
+                                      </div>
+                                    }
+                                    icon={
+                                      <div
+                                        className={
+                                          classes.sizeCheckboxUnchecked
+                                        }
+                                      >
+                                        {attribute.value}
+                                      </div>
+                                    }
+                                    value={attribute.value}
+                                  />
+                                ))}
                             </div>
-                          }
-                          value="M"
-                        />
-                        <Checkbox
-                          style={{ padding: 0 }}
-                          checkedIcon={
-                            <div className={classes.sizeCheckboxChecked}>L</div>
-                          }
-                          icon={
-                            <div className={classes.sizeCheckboxUnchecked}>
-                              L
-                            </div>
-                          }
-                          value="L"
-                        />
-                        <Checkbox
-                          style={{ padding: 0 }}
-                          checkedIcon={
-                            <div className={classes.sizeCheckboxChecked}>
-                              XL
-                            </div>
-                          }
-                          icon={
-                            <div className={classes.sizeCheckboxUnchecked}>
-                              XL
-                            </div>
-                          }
-                          value="XL"
-                        />
-                      </div>
-                    </div>
+                          </div>
+                        );
+                      }
+                    })}
+
                     <div className={classes.sliderBlock}>
                       <div className={classes.titleContainer}>
                         <span className={classes.controlsTitle}>
@@ -477,18 +452,21 @@ function mapDispatchToProps(dispatch) {
       searchProducts: productActions.searchProducts,
       getAllCategories: categoryActions.getAllCategories,
       getProductsInDepartment: productActions.getProductsInDepartment,
-      getProductsInCategory: productActions.getProductsInCategory
+      getProductsInCategory: productActions.getProductsInCategory,
+      getAllAttributes: attributeActions.getAllAttributes,
+      getAttributeValues: attributeActions.getAttributeValues
     },
     dispatch
   );
 }
 
-function mapStateToProps({ products, categories, departments }) {
+function mapStateToProps({ products, categories, attributes, departments }) {
   return {
     products: products.all.data.rows,
     count: products.all.data.count,
     searchResults: products.search.data.rows,
     searchCount: products.search.data.count,
+    searchValue: products.search.data.query_string,
     categories: categories.allCategories.data.rows,
     departmentCategories: categories.departmentCategories.data,
     departmentProducts: products.departmentProducts.data.rows,
@@ -496,7 +474,9 @@ function mapStateToProps({ products, categories, departments }) {
     departmentId: products.departmentProducts.data.department_id,
     categoryProductsResult: products.categoryProducts.data.rows,
     categoryProductsCount: products.categoryProducts.data.count,
-    categoryId: products.categoryProducts.data.category_id
+    categoryId: products.categoryProducts.data.category_id,
+    attributes: attributes.allAttributes.data,
+    attributeValues: attributes.attributeValues.data
   };
 }
 

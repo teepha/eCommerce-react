@@ -11,7 +11,7 @@ function* searchProductsSaga(action) {
     const data = yield call(productsService.searchProducts, action.payload);
     yield put({
       type: SEARCH_PRODUCTS_SUCCESS,
-      payload: data
+      payload: { ...data, ...action.payload }
     });
   } catch (error) {
     yield put({
