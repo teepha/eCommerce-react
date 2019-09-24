@@ -2,7 +2,7 @@ import * as Actions from "../../actions";
 
 const initialState = {
   data: [],
-  totalAmount: {},
+  totalAmount: "",
   isLoading: false,
   error: false
 };
@@ -42,7 +42,8 @@ const shoppingCartReducer = function(state = initialState, action) {
     case Actions.GET_CART_ITEMS_SUCCESS: {
       return {
         ...state,
-        data: action.payload,
+        data: action.payload.data,
+        totalAmount: action.payload.total_amount,
         isLoading: false,
         error: false
       };
@@ -64,13 +65,61 @@ const shoppingCartReducer = function(state = initialState, action) {
     case Actions.GET_TOTAL_AMOUNT_SUCCESS: {
       return {
         ...state,
-        totalAmount: action.payload,
+        totalAmount: action.payload.total_amount,
         error: false
       };
     }
     case Actions.GET_TOTAL_AMOUNT_ERROR: {
       return {
         ...state,
+        error: action.payload
+      };
+    }
+
+    case Actions.REMOVE_CART_ITEM: {
+      return {
+        ...state,
+        isLoading: true,
+        error: false
+      };
+    }
+    case Actions.REMOVE_CART_ITEM_SUCCESS: {
+      return {
+        ...state,
+        data: action.payload.data,
+        totalAmount: action.payload.total_amount,
+        isLoading: false,
+        error: false
+      };
+    }
+    case Actions.REMOVE_CART_ITEM_ERROR: {
+      return {
+        ...state,
+        isLoading: false,
+        error: action.payload
+      };
+    }
+
+    case Actions.UPDATE_CART_ITEM: {
+      return {
+        ...state,
+        isLoading: true,
+        error: false
+      };
+    }
+    case Actions.UPDATE_CART_ITEM_SUCCESS: {
+      return {
+        ...state,
+        data: action.payload.data,
+        totalAmount: action.payload.total_amount,
+        isLoading: false,
+        error: false
+      };
+    }
+    case Actions.UPDATE_CART_ITEM_ERROR: {
+      return {
+        ...state,
+        isLoading: false,
         error: action.payload
       };
     }

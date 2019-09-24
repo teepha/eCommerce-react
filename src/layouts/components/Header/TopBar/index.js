@@ -112,7 +112,7 @@ const mapStateToProps = ({
 }) => {
     return {
         shoppingCartItems: shoppingCart.cart.data,
-        itemsTotalAmount: shoppingCart.cart.totalAmount.total_amount
+        itemsTotalAmount: shoppingCart.cart.totalAmount
     };
 };
 

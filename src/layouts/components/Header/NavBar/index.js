@@ -55,7 +55,6 @@ class NavBar extends React.Component {
       this.props.generateUniqueCart();
     }
     this.props.getCart({ cart_id });
-    this.props.getTotalAmount({ cart_id });
   }
 
   handleToggleDepartment = e => {
@@ -93,7 +92,6 @@ class NavBar extends React.Component {
   };
 
   render() {
-    console.log("inside the NAVBAR", this.props, "the state", this.state);
     const { classes, brand, allDepartments, shoppingCartItems } = this.props;
     const brandComponent = (
       <Link to={"/"} className={classes.brand}>
@@ -248,7 +246,7 @@ const mapStateToProps = ({
     searchResults: products.search.data.rows,
     searchCount: products.search.data.count,
     shoppingCartItems: shoppingCart.cart.data,
-    itemsTotalAmount: shoppingCart.cart.totalAmount.total_amount
+    itemsTotalAmount: shoppingCart.cart.totalAmount
   };
 };
 
