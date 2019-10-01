@@ -6,6 +6,7 @@ import departments from './departments';
 import categories from './categories';
 import attributes from './attributes';
 import shoppingCart from './shoppingCart';
+import customer from './customer';
 
 const createReducer = (asyncReducers) =>
     combineReducers({
@@ -16,6 +17,7 @@ const createReducer = (asyncReducers) =>
         departments,
         categories,
         shoppingCart,
+        customer,
         ...asyncReducers
     });
 
