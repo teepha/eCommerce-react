@@ -1,9 +1,7 @@
 import { combineReducers } from "redux";
 import uniqueCart from "./generate_cart.reducer";
-import getCart from "./get_cart.reducer";
-import addCartItem from "./add_cart_item.reducer";
-import totalAmount from "./get_total_amount.reducer";
+import cart from "./shopping_cart.reducer";
 
-const shoppingCart = combineReducers({ uniqueCart, getCart, addCartItem, totalAmount });
+const shoppingCart = combineReducers({ uniqueCart, cart });
 
 export default shoppingCart;

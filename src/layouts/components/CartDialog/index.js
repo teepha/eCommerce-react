@@ -145,8 +145,8 @@ function mapDispatchToProps(dispatch) {
 function mapStateToProps({ alerts, cart, auth, shoppingCart }) {
   return {
     open: alerts.cart.open,
-    shoppingCartItems: shoppingCart.getCart.data,
-    itemsTotalAmount: shoppingCart.totalAmount.data.total_amount
+    shoppingCartItems: shoppingCart.cart.data,
+    itemsTotalAmount: shoppingCart.cart.totalAmount.total_amount
   };
 }
 
