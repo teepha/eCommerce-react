@@ -72,6 +72,36 @@ class shoppingCartService extends EventEmitter {
         });
     });
   };
+
+  removeItemFromCart = ({ item_id }) => {
+    return new Promise((resolve, reject) => {
+      axios
+        .delete(
+          systemConfig.serverBaseUrl + `/shoppingcart/removeProduct/${item_id}`
+        )
+        .then(response => {
+          resolve(response.data);
+        })
+        .catch(error => {
+          reject(error.response);
+        });
+    });
+  };
+
+  updateCartItem = ({ item_id, quantity }) => {
+    return new Promise((resolve, reject) => {
+      axios
+        .put(systemConfig.serverBaseUrl + `/shoppingcart/update/${item_id}`, {
+          quantity
+        })
+        .then(response => {
+          resolve(response.data);
+        })
+        .catch(error => {
+          reject(error.response);
+        });
+    });
+  };
 }
 
 const instance = new shoppingCartService();

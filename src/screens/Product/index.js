@@ -117,7 +117,6 @@ class Product extends Component {
   };
 
   render() {
-    console.log("inside the PRODUCT", this.props);
     const {
       classes,
       product,

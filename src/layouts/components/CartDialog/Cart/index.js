@@ -5,11 +5,19 @@ import { Fab, withStyles } from "@material-ui/core";
 import AddIcon from "@material-ui/icons/Add";
 import SubtractIcon from "@material-ui/icons/Remove";
 import React, { Component } from "react";
+import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
 import systemConfig from "../../../../config/system";
 import styles from "./styles";
+import * as shoppingCartActions from "../../../../store/actions/shoppingCart";
 
 class Cart extends Component {
+  handleRemoveItemClick = e => {
+    e.preventDefault();
+    const item_id = parseInt(e.target.id);
+    this.props.removeItemFromCart({ item_id });
+  };
+
   render() {
     const { classes, shoppingCartItems } = this.props;
 
@@ -49,25 +57,42 @@ class Cart extends Component {
                   </span>
                 </div>
                 <div className="w-full pt-2">
-                  <span className={classes.productCodeText}>{item.item_id}</span>
+                  <span className={classes.productCodeText}>
+                    {item.item_id}
+                  </span>
                 </div>
                 <div
                   className="w-full pt-2 cart-item-remove"
                   style={{ cursor: "pointer" }}
                 >
                   <span>
-                    <span className={classes.removeIcon}>X</span>
-                    <span className={classes.removeText}> Remove</span>
+                    <span
+                      className={classes.removeIcon}
+                      id={item.item_id}
+                      onClick={this.handleRemoveItemClick}
+                    >
+                      X
+                    </span>
+                    <span
+                      className={classes.removeText}
+                      id={item.item_id}
+                      onClick={this.handleRemoveItemClick}
+                    >
+                      {"  "}
+                      Remove
+                    </span>
                   </span>
                 </div>
               </div>
               <div className="w-1/12 ">
                 <span className={`cart-item-color ${classes.sizeText}`}>
-                  {(item.attributes.split(","))[1]}
+                  {item.attributes.split(",")[1]}
                 </span>
               </div>
               <div className="w-1/12 ">
-                      <span className={`cart-item-size ${classes.sizeText}`}>{(item.attributes.split(","))[0]}</span>
+                <span className={`cart-item-size ${classes.sizeText}`}>
+                  {item.attributes.split(",")[0]}
+                </span>
               </div>
               <div className="w-3/12 h-8">
                 <div className="flex flex-row">
@@ -77,9 +102,15 @@ class Cart extends Component {
                     className={classes.addRemoveIcon}
                   >
                     <SubtractIcon
-                      onClick={() => {
+                      id={item.item_id}
+                      onClick={e => {
+                        e.preventDefault();
+                        const item_id = parseInt(e.target.id);
                         if (item.quantity > 1) {
-                          item.quantity = item.quantity - 1;
+                          this.props.updateCartItem({
+                            item_id,
+                            quantity: item.quantity - 1
+                          });
                         }
                       }}
                     />
@@ -100,9 +131,15 @@ class Cart extends Component {
                     className={`increase-cart-quantity ${classes.addRemoveIcon}`}
                   >
                     <AddIcon
-                      onClick={() => {
+                      id={item.item_id}
+                      onClick={e => {
+                        e.preventDefault();
+                        const item_id = parseInt(e.target.id);
                         if (item.quantity >= 1) {
-                          item.quantity += 1;
+                          this.props.updateCartItem({
+                            item_id,
+                            quantity: item.quantity + 1
+                          });
                         }
                       }}
                     />
@@ -121,6 +158,17 @@ class Cart extends Component {
   }
 }
 
+function mapDispatchToProps(dispatch) {
+  return bindActionCreators(
+    {
+      removeItemFromCart: shoppingCartActions.removeItemFromCart,
+      getTotalAmount: shoppingCartActions.getTotalAmount,
+      updateCartItem: shoppingCartActions.updateCartItem
+    },
+    dispatch
+  );
+}
+
 function mapStateToProps({ shoppingCart }) {
   return {
     shoppingCartItems: shoppingCart.cart.data
@@ -130,6 +178,6 @@ function mapStateToProps({ shoppingCart }) {
 export default withStyles(styles)(
   connect(
     mapStateToProps,
-    null
+    mapDispatchToProps
   )(Cart)
 );

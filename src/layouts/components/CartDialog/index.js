@@ -61,7 +61,7 @@ class CartDialog extends Component {
             <div className="flex">
               <div className="w-3/5 sm-12">
                 <span className={classes.titleText}>
-                  {shoppingCartItems && shoppingCartItems.length > 1
+                  {shoppingCartItems.length > 1
                     ? `${shoppingCartItems.length} items`
                     : `${shoppingCartItems.length} item`}{" "}
                   in Your Cart
@@ -146,7 +146,7 @@ function mapStateToProps({ alerts, cart, auth, shoppingCart }) {
   return {
     open: alerts.cart.open,
     shoppingCartItems: shoppingCart.cart.data,
-    itemsTotalAmount: shoppingCart.cart.totalAmount.total_amount
+    itemsTotalAmount: shoppingCart.cart.totalAmount
   };
 }
 
