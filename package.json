@@ -16,7 +16,7 @@
     "jss": "^9.8.7",
     "jss-extend": "^6.2.0",
     "jwt-decode": "^2.2.0",
-    "lodash": "^4.17.11",
+    "lodash": "^4.17.21",
     "material-ui-slider": "^3.0.0",
     "prop-types": "^15.7.2",
     "react": "^16.13.1",
